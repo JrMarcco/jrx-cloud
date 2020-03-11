@@ -32,19 +32,15 @@ public class BaseRsp<T> implements Serializable {
     public BaseRsp() {
     }
 
-    public BaseRsp(String code, String msg) {
+    private BaseRsp(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public BaseRsp(String code, String msg, T data) {
+    private BaseRsp(String code, String msg, T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
-    }
-
-    public static <T> BaseRsp<T> of(BusinessException exception) {
-        return new BaseRsp<>(exception.getExceptionCode(), exception.getExceptionMessage());
     }
 
     public static BaseRsp<Void> success() {
@@ -65,5 +61,9 @@ public class BaseRsp<T> implements Serializable {
 
     public static <T> BaseRsp<T> error(IBusinessError err) {
         return new BaseRsp<>(err.getErrorCode(), err.getErrorMessage());
+    }
+
+    public static <T> BaseRsp<T> error(BusinessException exception) {
+        return new BaseRsp<>(exception.getExceptionCode(), exception.getExceptionMessage());
     }
 }

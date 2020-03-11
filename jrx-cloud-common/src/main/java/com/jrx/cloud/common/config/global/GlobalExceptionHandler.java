@@ -42,7 +42,8 @@ public class GlobalExceptionHandler {
 
             return BaseRsp.error(
                     PARAM_EXCEPTION.getErrorCode(),
-                    result.getFieldError() == null ? PARAM_EXCEPTION.getErrorMessage() : result.getFieldError().getDefaultMessage());
+                    result.getFieldError() == null ? PARAM_EXCEPTION.getErrorMessage() : result.getFieldError().getDefaultMessage()
+            );
         }
 
         return BaseRsp.error(PARAM_EXCEPTION);
