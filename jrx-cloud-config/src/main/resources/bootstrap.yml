@@ -1,0 +1,35 @@
+server:
+  port: 18100
+spring:
+  profiles:
+    active: dev
+  application:
+    name: jrmarcco-config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/JrMarcco/jrmarcco-config-server-repo.git
+          searchPaths: /*, common/*
+          username:
+          password:
+          basedir: jrx-test-config/config-repo
+
+encrypt:
+  key-store:
+    location: classpath:config-server.jks
+    password: jrmarcco
+    alias: config-server-key
+    secret: jrmarcco
+
+---
+spring:
+  profiles: dev
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+    health-check-url-path: /actuator/health
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:18000/eureka/
