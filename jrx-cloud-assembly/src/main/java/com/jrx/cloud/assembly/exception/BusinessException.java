@@ -1,5 +1,6 @@
 package com.jrx.cloud.assembly.exception;
 
+import com.jrx.cloud.assembly.error.GlobalError;
 import com.jrx.cloud.assembly.error.IBusinessError;
 
 /**
@@ -20,7 +21,7 @@ public class BusinessException extends Exception {
     }
 
     public String getExceptionCode() {
-        return err.getErrorCode();
+        return err == null ? GlobalError.SERVICE_EXCEPTION.getErrorCode() : err.getErrorCode();
     }
 
     public String getExceptionMessage() {

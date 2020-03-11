@@ -18,11 +18,12 @@
         <version.spring.cloud>Hoxton.SR2</version.spring.cloud>
 
         <version.springfox.swagger>2.9.2</version.springfox.swagger>
-        <version.knife4j>2.0.1</version.knife4j>
+        <version.knife4j>2.0.2</version.knife4j>
 
         <version.jackson>2.10.2</version.jackson>
 
         <version.servlet>4.0.1</version.servlet>
+        <version.validation>2.0.1.Final</version.validation>
         <version.lombok>1.18.12</version.lombok>
     </properties>
 
@@ -110,6 +111,13 @@
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${version.servlet}</version>
+            </dependency>
+
+            <!-- Validation Dependency -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${version.validation}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

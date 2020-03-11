@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum GlobalError implements IBusinessError {
+    PARAM_EXCEPTION("0001", "请求参数有误"),
     SERVICE_EXCEPTION("9999", "服务器异常");
 
     private final String errorCode;
