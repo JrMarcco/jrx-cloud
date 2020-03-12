@@ -4,7 +4,7 @@ spring:
   cloud:
     config:
       discovery:
-        serviceId: jrmarcco-config-server
+        serviceId: jrx-cloud-config
         enabled: true
       name: user-api, mybatis
       label: master

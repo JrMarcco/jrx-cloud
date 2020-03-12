@@ -1,8 +1,0 @@
-com\jrx\cloud\assembly\constant\RedisConstants.class
-com\jrx\cloud\assembly\constant\BaseConstants.class
-com\jrx\cloud\assembly\error\IBusinessError.class
-com\jrx\cloud\assembly\base\BaseRsp.class
-com\jrx\cloud\assembly\error\GlobalError.class
-com\jrx\cloud\assembly\enums\DeletedEnum.class
-com\jrx\cloud\assembly\exception\BusinessException.class
-com\jrx\cloud\assembly\enums\StatusEnum.class

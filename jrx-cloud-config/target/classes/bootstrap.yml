@@ -4,15 +4,15 @@ spring:
   profiles:
     active: dev
   application:
-    name: jrmarcco-config-server
+    name: jrx-cloud-config
   cloud:
     config:
       server:
         git:
           uri: https://github.com/JrMarcco/jrmarcco-config-server-repo.git
           searchPaths: /*, common/*
-          username: JrMarcco@gmail.com
-          password: JrMarcco!0
+          username:
+          password:
           basedir: jrx-test-config/config-repo
 
 encrypt:
@@ -25,20 +25,11 @@ encrypt:
 ---
 spring:
   profiles: dev
-#  cloud:
-#    consul:
-#      host: 127.0.0.1
-#      port: 18000
-#    discovery:
-#      healthCheckPath: /actuator/health
-#      healthCheckInterval: 15s
-#      instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
 eureka:
   instance:
     leaseRenewalIntervalInSeconds: 1
     leaseExpirationDurationInSeconds: 2
     health-check-url-path: /actuator/health
-    instance-id: ${spring.application.name}:${server.port}
   client:
     serviceUrl:
       defaultZone: http://localhost:18000/eureka/

@@ -13,6 +13,12 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- Jrx Cloud Dependency -->
+        <dependency>
+            <groupId>com.jrx.cloud.assembly</groupId>
+            <artifactId>jrx-cloud-assembly</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.jrx.cloud.common</groupId>
             <artifactId>jrx-cloud-common</artifactId>

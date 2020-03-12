@@ -3,13 +3,13 @@ server:
 
 spring:
   application:
-    name: jrx-cloud-eureka
+    name: jrx-cloud-user
 
 eureka:
-  server:
-    evictionIntervalTimerInMs: 5000
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+    health-check-url-path: /actuator/health
   client:
-    registerWithEureka: false
-    fetchRegistry: false
     serviceUrl:
       defaultZone: http://localhost:18000/eureka/
