@@ -17,10 +17,17 @@
         <version.spring.boot>2.2.5.RELEASE</version.spring.boot>
         <version.spring.cloud>Hoxton.SR2</version.spring.cloud>
 
+        <version.mysql.connector>8.0.19</version.mysql.connector>
+        <version.mybatis.stater>2.1.2</version.mybatis.stater>
+        <version.mybatis.pagehelper>5.1.11</version.mybatis.pagehelper>
+        <version.druid>1.2.21</version.druid>
+
         <version.springfox.swagger>2.9.2</version.springfox.swagger>
         <version.knife4j>2.0.2</version.knife4j>
 
         <version.jackson>2.10.2</version.jackson>
+
+        <version.logback>1.2.3</version.logback>
 
         <version.servlet>4.0.1</version.servlet>
         <version.validation>2.0.1.Final</version.validation>
@@ -53,6 +60,34 @@
                 <version>${version.spring.cloud}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- MySQL Connector Dependency -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${version.mysql.connector}</version>
+            </dependency>
+
+            <!-- Mybatis Starter Dependency -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${version.mybatis.stater}</version>
+            </dependency>
+
+            <!-- Page Helper Dependency -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${version.mybatis.pagehelper}</version>
+            </dependency>
+
+            <!-- Druid Dependency -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${version.druid}</version>
             </dependency>
 
             <!-- Springfox Swagger2 Dependency -->
@@ -106,6 +141,13 @@
                 <version>${version.jackson}</version>
             </dependency>
 
+            <!-- Logback Dependency -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${version.logback}</version>
+            </dependency>
+
             <!-- Servlet Dependency -->
             <dependency>
                 <groupId>javax.servlet</groupId>
@@ -119,15 +161,13 @@
                 <artifactId>validation-api</artifactId>
                 <version>${version.validation}</version>
             </dependency>
+
+            <!-- Lombok Dependency -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${version.lombok}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <!-- Lombok Dependency -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${version.lombok}</version>
-        </dependency>
-    </dependencies>
 </project>

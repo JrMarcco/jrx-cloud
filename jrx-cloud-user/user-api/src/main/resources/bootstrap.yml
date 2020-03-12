@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: dev
+  cloud:
+    config:
+      discovery:
+        serviceId: jrmarcco-config-server
+        enabled: true
+      name: user-api, mybatis
+      label: master
+      profile: ${spring.profiles.active}

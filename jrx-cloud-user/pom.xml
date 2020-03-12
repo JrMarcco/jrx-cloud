@@ -20,6 +20,7 @@
 
     <properties>
         <version.jrx.cloud.common>1.0-SNAPSHOT</version.jrx.cloud.common>
+        <version.jrx.cloud.user>1.0-SNAPSHOT</version.jrx.cloud.user>
     </properties>
 
     <dependencyManagement>
@@ -29,6 +30,12 @@
                 <groupId>com.jrx.cloud.common</groupId>
                 <artifactId>jrx-cloud-common</artifactId>
                 <version>${version.jrx.cloud.common}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jrx.cloud.user</groupId>
+                <artifactId>user-inf</artifactId>
+                <version>${version.jrx.cloud.user}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

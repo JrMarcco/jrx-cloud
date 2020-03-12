@@ -10,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum DeletedEnum {
-    YES((byte) 1, "是"),
-    NO((byte) 0, "否");
+    YES((byte) 1, "已删除"),
+    NO((byte) 0, "未删除");
 
     private final Byte deleted;
     private final String desc;
