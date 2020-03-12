@@ -3,7 +3,7 @@
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
     <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
 
-    <property name="FILENAME" value="user-server" />
+    <property name="FILENAME" value="user-api" />
 
     <property name="CONSOLE_PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5.5level) %clr(${PID:- }){magenta} --- [%15.15t] %clr(%-40.40c{1.} [%4.4L]){cyan} %clr(:){faint} %msg%n%wEx" />
     <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level ${PID:- } --- [%t]%-40.40c{1.} : %m%n%wEx" />

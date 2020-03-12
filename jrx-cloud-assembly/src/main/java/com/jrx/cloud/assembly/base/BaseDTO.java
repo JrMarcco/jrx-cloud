@@ -22,18 +22,18 @@ import java.util.Date;
 public class BaseDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键id")
+    @ApiModelProperty("主键id")
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty("创建时间")
     @JsonFormat(pattern = JsonConstants.DATE_TIME_PATTERN, timezone = JsonConstants.TIME_ZONE_GMT8)
     private Date createTime;
-    @ApiModelProperty(value = "更新时间")
+    @ApiModelProperty("更新时间")
     @JsonFormat(pattern = JsonConstants.DATE_TIME_PATTERN, timezone = JsonConstants.TIME_ZONE_GMT8)
     private Date updateTime;
-    @ApiModelProperty(value = "创建用户id")
+    @ApiModelProperty("创建用户id")
     private String createUser;
-    @ApiModelProperty(value = "更新用户id")
+    @ApiModelProperty("更新用户id")
     private String updateUser;
 }

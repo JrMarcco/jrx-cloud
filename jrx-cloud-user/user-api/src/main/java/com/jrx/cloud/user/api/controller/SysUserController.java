@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,13 +33,12 @@ public class SysUserController {
     private final ISysUserService sysUserService;
 
     @ApiOperation(value = "校验用户信息")
-    public BaseRsp<Void> validateUser(@RequestBody ValidateUserReqDTO req) {
-        return BaseRsp.success();
+    @PostMapping("/validateUser")
+    public void validateUser(@RequestBody ValidateUserReqDTO req) {
     }
 
     @ApiOperation("分页查询用户信息")
     @PostMapping("/pageQuery")
-    public BaseRsp<List<SysUser>> pageQuery(@RequestBody SysUserQueryDTO dto) {
-        return BaseRsp.success(Collections.<SysUser>emptyList());
+    public void pageQuery(@RequestBody SysUserQueryDTO dto) {
     }
 }

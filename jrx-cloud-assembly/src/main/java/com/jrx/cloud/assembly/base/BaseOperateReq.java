@@ -21,7 +21,7 @@ public class BaseOperateReq implements Serializable {
     @ApiModelProperty(value = "主键id", required = true)
     @NotNull(message = "请求参数有误，主键id为空")
     private Integer id;
-    @ApiModelProperty(value = "当前用户id")
+    @ApiModelProperty(value = "当前用户id", required = true)
     @NotNull(message = "请求参数有误，当前用户id为空")
     private Integer operateUser;
 }

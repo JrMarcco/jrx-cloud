@@ -18,16 +18,13 @@ import java.io.Serializable;
 public class BaseRsp<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "响应码，成功为\"0000\"，其他为具体业务错误码")
+    @ApiModelProperty("响应码，成功为\"0000\"，其他为具体业务错误码")
     private String code;
-    @ApiModelProperty(value = "响应消息，成功为\"success\"，其他为具体错误消息或异常信息")
+    @ApiModelProperty("响应消息，成功为\"success\"，其他为具体错误消息或异常信息")
     private String msg;
 
-    @ApiModelProperty(value = "返回结果")
+    @ApiModelProperty("返回结果")
     private T data;
-
-    @ApiModelProperty(value = "总数，分页查询时生效")
-    private Integer total;
 
     public BaseRsp() {
     }

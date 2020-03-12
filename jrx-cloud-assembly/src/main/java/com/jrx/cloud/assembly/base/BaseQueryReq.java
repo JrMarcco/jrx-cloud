@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class BaseQueryReq implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键id")
+    @ApiModelProperty(value = "主键id", required = true)
     @NotNull(message = "请求参数有误，主键id为空")
     private Integer id;
 }
