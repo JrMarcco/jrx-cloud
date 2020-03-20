@@ -1,0 +1,41 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: jrx-cloud-gateway
+  cloud:
+    config:
+      discovery:
+        serviceId: jrx-cloud-config
+        enabled: true
+      name: api-gateway, hystrix
+      label: master
+      profile: ${spring.profiles.active}
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lowerCaseServiceId: true
+      routes:
+        - id: user-api
+          uri: lb://jrx-cloud-user
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1
+jrx:
+  gateway:
+    ignorePaths: /auth/jwt
+    tokenHeader: Access-Token
+
+---
+spring:
+  profiles: dev
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+    health-check-url-path: /actuator/health
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:18000/eureka/
