@@ -90,17 +90,6 @@ public class ShellExecUtils {
     // ----------------------------------------< Private Method >----------------------------------------
     private static void startMsgReadThread(Process process) {
         executor.submit(() -> {
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = in.readLine()) != null) {
-                    log.info("### {} ###", line);
-                }
-            } catch (IOException e) {
-                log.error("### Read shell output msg error: {} ###", e.getMessage(), e);
-            }
-        });
-
-        executor.submit(() -> {
             try (BufferedReader err = new BufferedReader(new InputStreamReader(process.getErrorStream()))) {
                 String line;
                 while ((line = err.readLine()) != null) {
@@ -108,6 +97,17 @@ public class ShellExecUtils {
                 }
             } catch (IOException e) {
                 log.error("### Read shell error msg error: {} ###", e.getMessage(), e);
+            }
+        });
+
+        executor.submit(() -> {
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = in.readLine()) != null) {
+                    log.info("### {} ###", line);
+                }
+            } catch (IOException e) {
+                log.error("### Read shell output msg error: {} ###", e.getMessage(), e);
             }
         });
     }
