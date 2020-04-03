@@ -52,7 +52,7 @@ public class ShellExecUtils {
      *
      * @param dirPath 目标文件夹路径
      */
-    public static String zipDirectory(String dirPath) throws IOException, InterruptedException {
+    public static String zipDir(String dirPath) throws IOException, InterruptedException {
         execShell(String.format("zip -r %s.zip %s", dirPath, dirPath));
         return dirPath + ".zip";
     }
