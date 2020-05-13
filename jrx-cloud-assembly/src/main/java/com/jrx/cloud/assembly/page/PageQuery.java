@@ -21,16 +21,16 @@ public class PageQuery implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "搜索关键字，多字段模糊匹配时候使用")
-    private String keyword;
+    protected String keyword;
     @ApiModelProperty(value = "当前页码，默认值1", example = "1")
-    private Integer pageNum = 1;
+    protected Integer pageNum = 1;
     @ApiModelProperty(value = "当前页面大小，默认值10", example = "10")
-    private Integer pageSize = 10;
+    protected Integer pageSize = 10;
 
     @ApiModelProperty(value = "开始时间")
     @JsonFormat(pattern = JsonConstants.DATE_TIME_PATTERN, timezone = JsonConstants.TIME_ZONE_GMT8)
-    private Date startTime;
+    protected Date startTime;
     @ApiModelProperty(value = "结束时间")
     @JsonFormat(pattern = JsonConstants.DATE_TIME_PATTERN, timezone = JsonConstants.TIME_ZONE_GMT8)
-    private Date endTime;
+    protected Date endTime;
 }

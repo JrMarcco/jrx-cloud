@@ -24,16 +24,16 @@ public class BaseDTO implements Serializable {
 
     @ApiModelProperty("主键id")
     @JsonSerialize(using = ToStringSerializer.class)
-    private Long id;
+    protected Long id;
 
     @ApiModelProperty("创建时间")
     @JsonFormat(pattern = JsonConstants.DATE_TIME_PATTERN, timezone = JsonConstants.TIME_ZONE_GMT8)
-    private Date createTime;
+    protected Date createTime;
     @ApiModelProperty("更新时间")
     @JsonFormat(pattern = JsonConstants.DATE_TIME_PATTERN, timezone = JsonConstants.TIME_ZONE_GMT8)
-    private Date updateTime;
+    protected Date updateTime;
     @ApiModelProperty("创建用户id")
-    private String createUser;
+    protected String createUser;
     @ApiModelProperty("更新用户id")
-    private String updateUser;
+    protected String updateUser;
 }
