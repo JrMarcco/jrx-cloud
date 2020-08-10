@@ -1,6 +1,5 @@
 package com.jrx.cloud.user.api;
 
-import com.jrx.cloud.common.config.global.GlobalExceptionHandler;
 import com.jrx.cloud.user.api.config.ConfigPackage;
 import com.jrx.cloud.user.api.controller.ControllerPackage;
 import com.jrx.cloud.user.api.mapper.MapperPackage;
