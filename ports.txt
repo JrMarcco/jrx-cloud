@@ -3,3 +3,4 @@
 18200 :: api-gateway
 18300 :: auth-server
 18400 :: user-api
+18500 :: websocket-api

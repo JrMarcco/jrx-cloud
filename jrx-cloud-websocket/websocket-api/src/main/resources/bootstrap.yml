@@ -1,0 +1,11 @@
+spring:
+  profiles:
+    active: dev
+  cloud:
+    config:
+      discovery:
+        serviceId: jrx-cloud-config
+        enabled: true
+      name: websocket-api
+      label: master
+      profile: ${spring.profiles.active}

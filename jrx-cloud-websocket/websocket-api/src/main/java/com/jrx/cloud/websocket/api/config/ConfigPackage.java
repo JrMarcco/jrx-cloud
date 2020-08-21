@@ -1,4 +1,4 @@
-package com.jrx.cloud.websocket.config;
+package com.jrx.cloud.websocket.api.config;
 
 /**
  * @author hongjc

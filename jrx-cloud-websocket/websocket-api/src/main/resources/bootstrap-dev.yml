@@ -1,0 +1,15 @@
+server:
+  port: 18000
+
+spring:
+  application:
+    name: jrx-cloud-websocket
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+    health-check-url-path: /actuator/health
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:18000/eureka/

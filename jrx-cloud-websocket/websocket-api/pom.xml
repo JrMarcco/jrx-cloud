@@ -19,6 +19,11 @@
             <artifactId>jrx-cloud-assembly</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.jrx.cloud.common</groupId>
+            <artifactId>jrx-cloud-common</artifactId>
+        </dependency>
+
         <!-- Spring Boot Dependency -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -55,6 +60,12 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-client</artifactId>
+        </dependency>
+
+        <!-- Netty Dependency -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
         </dependency>
     </dependencies>
 </project>

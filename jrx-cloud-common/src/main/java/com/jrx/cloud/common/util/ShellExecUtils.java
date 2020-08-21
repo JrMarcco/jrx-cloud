@@ -1,6 +1,5 @@
 package com.jrx.cloud.common.util;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 
@@ -8,9 +7,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * @author hongjc
@@ -22,11 +19,8 @@ public class ShellExecUtils {
     private static ThreadPoolExecutor executor;
 
     static {
-        var namedThreadFactory = new ThreadFactoryBuilder()
-                .setNameFormat("shell-exec-msg-pool-%d").build();
-
         executor = new ThreadPoolExecutor(8, 16, 5, TimeUnit.SECONDS, new LinkedBlockingDeque<>(128),
-                namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
+                new ThreadPoolExecutor.AbortPolicy());
     }
 
     /**
