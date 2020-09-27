@@ -56,7 +56,8 @@ public class SnowflakeUtils {
         return ((now - START_TIME) << TIME_LEFT_BIT) | (DATA_ID << DATA_LEFT_BIT) | (WORK_ID << WORK_LEFT_BIT) | LAST_SEQ;
     }
 
-    public static long nextMillis(long lastMillis) {
+    // ----------------------------------------< Private Method >----------------------------------------
+    private static long nextMillis(long lastMillis) {
         var now = System.currentTimeMillis();
         while (now <= lastMillis) {
             now = System.currentTimeMillis();
@@ -73,7 +74,7 @@ public class SnowflakeUtils {
         return sums % (max + 1);
     }
 
-    public static int getWorkId() {
+    private static int getWorkId() {
         try {
             return getHostId(Inet4Address.getLocalHost().getHostAddress(), WORK_MAX_NUM);
         } catch (UnknownHostException e) {
@@ -81,7 +82,7 @@ public class SnowflakeUtils {
         }
     }
 
-    public static int getDataId() {
+    private static int getDataId() {
         try {
             return getHostId(Inet4Address.getLocalHost().getHostName(), DATA_MAX_NUM);
         } catch (UnknownHostException e) {
