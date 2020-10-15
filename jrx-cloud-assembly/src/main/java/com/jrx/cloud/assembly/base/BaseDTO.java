@@ -1,9 +1,5 @@
 package com.jrx.cloud.assembly.base;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.jrx.cloud.assembly.constant.JsonConstants;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,14 +19,11 @@ public class BaseDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("主键id")
-    @JsonSerialize(using = ToStringSerializer.class)
     protected Long id;
 
     @ApiModelProperty("创建时间")
-    @JsonFormat(pattern = JsonConstants.DATE_TIME_PATTERN, timezone = JsonConstants.TIME_ZONE_GMT8)
     protected Date createTime;
     @ApiModelProperty("更新时间")
-    @JsonFormat(pattern = JsonConstants.DATE_TIME_PATTERN, timezone = JsonConstants.TIME_ZONE_GMT8)
     protected Date updateTime;
     @ApiModelProperty("创建用户id")
     protected String createUser;
