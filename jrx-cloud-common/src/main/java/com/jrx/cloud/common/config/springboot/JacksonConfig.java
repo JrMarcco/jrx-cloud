@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @SuppressWarnings("SpringFacetCodeInspection")
 @Configuration
-public class SpringBootJacksonConfig {
+public class JacksonConfig {
 
     @Bean
     public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {

@@ -1,6 +1,7 @@
 package jrx.cloud.gateway;
 
 import com.jrx.cloud.common.config.global.GlobalExceptionHandler;
+import com.jrx.cloud.common.config.springboot.JacksonConfig;
 import jrx.cloud.gateway.config.ConfigPackage;
 import jrx.cloud.gateway.controller.ControllerPackage;
 import jrx.cloud.gateway.filter.FilterPackage;
@@ -20,7 +21,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients(basePackageClasses = {RemotePackage.class})
-@ComponentScan(basePackageClasses = {GlobalExceptionHandler.class, ConfigPackage.class, FilterPackage.class, ControllerPackage.class})
+@ComponentScan(basePackageClasses = {GlobalExceptionHandler.class, JacksonConfig.class, ConfigPackage.class, FilterPackage.class, ControllerPackage.class})
 public class ApiGatewayStarter {
 
     public static void main(String[] args) {

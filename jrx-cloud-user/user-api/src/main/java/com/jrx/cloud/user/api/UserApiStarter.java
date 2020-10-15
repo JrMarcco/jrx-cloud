@@ -1,5 +1,6 @@
 package com.jrx.cloud.user.api;
 
+import com.jrx.cloud.common.config.springboot.JacksonConfig;
 import com.jrx.cloud.user.api.config.ConfigPackage;
 import com.jrx.cloud.user.api.controller.ControllerPackage;
 import com.jrx.cloud.user.api.mapper.MapperPackage;
@@ -18,7 +19,7 @@ import org.springframework.context.annotation.ComponentScan;
 @Slf4j
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan(basePackageClasses = {ConfigPackage.class, ControllerPackage.class, ServicePackage.class})
+@ComponentScan(basePackageClasses = {JacksonConfig.class, ConfigPackage.class, ControllerPackage.class, ServicePackage.class})
 @MapperScan(basePackageClasses = {MapperPackage.class})
 public class UserApiStarter {
 

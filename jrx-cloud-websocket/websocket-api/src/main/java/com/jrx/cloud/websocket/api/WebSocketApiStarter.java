@@ -1,6 +1,7 @@
 package com.jrx.cloud.websocket.api;
 
 import com.jrx.cloud.common.config.context.ApplicationContextListener;
+import com.jrx.cloud.common.config.springboot.JacksonConfig;
 import com.jrx.cloud.common.util.ApplicationContextUtils;
 import com.jrx.cloud.websocket.api.config.ConfigPackage;
 import com.jrx.cloud.websocket.api.config.WebSocketConfig;
@@ -18,12 +19,12 @@ import org.springframework.context.annotation.ComponentScan;
 @Slf4j
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan(basePackageClasses = {ConfigPackage.class, ApplicationContextListener.class, HandlerPackage.class})
-public class WebsocketApiStarter {
+@ComponentScan(basePackageClasses = {JacksonConfig.class, ConfigPackage.class, ApplicationContextListener.class, HandlerPackage.class})
+public class WebSocketApiStarter {
 
     public static void main(String[] args) {
-        SpringApplication.run(WebsocketApiStarter.class, args);
-        log.info("### Websocket Server Has Already Started ###");
+        SpringApplication.run(WebSocketApiStarter.class, args);
+        log.info("### WebSocket Server Has Already Started ###");
 
         ApplicationContextUtils.getBean(WebSocketConfig.class).start();
     }
