@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
  * @author jrmarcco
  * @version 1.0  2020/10/15
  */
+@SuppressWarnings("SpringFacetCodeInspection")
 @Configuration
 public class SpringBootJacksonConfig {
 
