@@ -13,7 +13,7 @@ import java.util.List;
  * @author hongjc
  * @version 1.0  2020/3/12
  */
-@ApiModel("分页数据对象")
+@ApiModel(description = "分页数据对象")
 @Data
 @NoArgsConstructor
 public class PageData<T> implements Serializable {

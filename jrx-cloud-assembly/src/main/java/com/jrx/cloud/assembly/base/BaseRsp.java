@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @version 1.0  2020/3/2
  */
 @Data
-@ApiModel(value = "基础响应信息")
+@ApiModel(description = "基础响应信息")
 public class BaseRsp<T> implements Serializable {
     private static final long serialVersionUID = 1L;
 

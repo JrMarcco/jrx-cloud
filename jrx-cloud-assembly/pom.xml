@@ -38,6 +38,13 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+
+        <!-- MyBatis PageHelper Dependency -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

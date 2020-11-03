@@ -15,7 +15,7 @@ import static com.jrx.cloud.assembly.error.GlobalError.*;
 /**
  * 统一异常处理。
  *
- * @author hongjc
+ * @author jrmarcco
  * @version 1.0  2020/3/2
  */
 @Slf4j

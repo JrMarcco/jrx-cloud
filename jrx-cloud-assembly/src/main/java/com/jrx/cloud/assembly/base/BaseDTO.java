@@ -12,7 +12,7 @@ import java.util.Date;
  * @author hongjc
  * @version 1.0  2020/3/11
  */
-@ApiModel(value = "通用基础视图对象信息")
+@ApiModel(description = "通用基础视图对象信息")
 @Data
 @NoArgsConstructor
 public class BaseDTO implements Serializable {

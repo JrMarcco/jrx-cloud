@@ -71,9 +71,7 @@ public class ControllerInterceptor {
     }
 
 
-    // ====================================================================================================
-    //                                   Private Method
-    // ====================================================================================================
+    // ----------------------------------------< Private Method >----------------------------------------
     private List<MethodParam> listMethodParam(MethodSignature signature) {
         var methodParamList = new ArrayList<MethodParam>();
 
@@ -109,9 +107,8 @@ public class ControllerInterceptor {
         log.info("### {} --- {} ###", idThreadLocal.get(), builder);
     }
 
-    // ====================================================================================================
-    //                                Private Static Class
-    // ====================================================================================================
+
+    // -------------------------------------< Private Static Class >-------------------------------------
     @Data(staticConstructor = "of")
     private static class MethodInfo {
         private final Method method;
