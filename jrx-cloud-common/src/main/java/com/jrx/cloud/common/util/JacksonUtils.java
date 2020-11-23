@@ -16,7 +16,7 @@ import java.io.IOException;
  * @version 1.0  2020/3/2
  */
 @Slf4j
-public class JsonUtils {
+public class JacksonUtils {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 

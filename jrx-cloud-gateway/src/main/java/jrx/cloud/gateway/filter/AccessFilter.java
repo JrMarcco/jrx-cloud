@@ -1,7 +1,7 @@
 package jrx.cloud.gateway.filter;
 
 import com.jrx.cloud.assembly.base.BaseRsp;
-import com.jrx.cloud.common.util.JsonUtils;
+import com.jrx.cloud.common.util.JacksonUtils;
 import jrx.cloud.gateway.config.GatewayConfiguration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -75,7 +75,7 @@ public class AccessFilter implements GlobalFilter, Ordered {
 
     private Mono<Void> errorMono(ServerWebExchange exchange, BaseRsp<Void> result) {
         exchange.getResponse().setStatusCode(HttpStatus.OK);
-        var bytes = Optional.ofNullable(JsonUtils.toJson(result)).map(String::getBytes).orElse(new byte[] {});
+        var bytes = Optional.ofNullable(JacksonUtils.toJson(result)).map(String::getBytes).orElse(new byte[] {});
         var buffer = exchange.getResponse().bufferFactory().wrap(bytes);
         return exchange.getResponse().writeWith(Flux.just(buffer));
     }
