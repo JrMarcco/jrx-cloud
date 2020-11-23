@@ -22,6 +22,8 @@
         <version.mybatis.pagehelper>5.2.0</version.mybatis.pagehelper>
         <version.druid>1.1.23</version.druid>
 
+        <version.aspectj>1.9.6</version.aspectj>
+
         <version.netty>4.1.51.Final</version.netty>
 
         <version.springfox.swagger>3.0.0</version.springfox.swagger>
@@ -93,6 +95,13 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${version.druid}</version>
+            </dependency>
+
+            <!-- Aspectj Dependency -->
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${version.aspectj}</version>
             </dependency>
 
             <!-- Netty Dependency -->
