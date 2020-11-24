@@ -1,6 +1,7 @@
 package com.jrx.cloud.common.interceptor;
 
 import com.jrx.cloud.assembly.exception.BusinessException;
+import com.jrx.cloud.common.util.JacksonUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -97,7 +98,7 @@ public class ControllerInterceptor {
             var detail = methodDetails.get(i);
 
             builder.append(detail.getMethodParam().getName()).append(":");
-            builder.append(detail.getValue());
+            builder.append(JacksonUtils.toJson(detail.getValue()));
             if (i != methodDetails.size() - 1) {
                 builder.append(", ");
             }
