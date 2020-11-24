@@ -98,7 +98,7 @@ public class ControllerInterceptor {
             var detail = methodDetails.get(i);
 
             builder.append(detail.getMethodParam().getName()).append(":");
-            builder.append(JacksonUtils.toJson(detail.getValue()));
+            builder.append(detail.getValue());
             if (i != methodDetails.size() - 1) {
                 builder.append(", ");
             }
