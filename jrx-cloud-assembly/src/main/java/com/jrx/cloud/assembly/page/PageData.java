@@ -29,7 +29,7 @@ public class PageData<T> implements Serializable {
         this.total = total;
     }
 
-    public static <T> PageData<T> of() {
+    public static <T> PageData<T> empty() {
         return new PageData<>(Collections.emptyList(), 0);
     }
 
