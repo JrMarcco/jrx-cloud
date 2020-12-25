@@ -6,7 +6,9 @@ import com.jrx.cloud.assembly.exception.BusinessException;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.util.StringUtils;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -16,6 +18,7 @@ import java.io.Serializable;
 @Data
 @ApiModel(description = "基础响应信息")
 public class BaseRsp<T> implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("响应码，成功为\"0000\"，其他为具体业务错误码")
@@ -62,5 +65,9 @@ public class BaseRsp<T> implements Serializable {
 
     public static <T> BaseRsp<T> error(BusinessException exception) {
         return new BaseRsp<>(exception.getExceptionCode(), exception.getExceptionMessage());
+    }
+
+    protected Boolean isSuccess() {
+        return !StringUtils.isEmpty(code) && BaseConstants.RESULT_CODE_SUCCESS.equals(code);
     }
 }
