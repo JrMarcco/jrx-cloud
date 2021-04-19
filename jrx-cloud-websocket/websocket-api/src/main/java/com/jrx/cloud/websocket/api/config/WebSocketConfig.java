@@ -28,7 +28,7 @@ import javax.annotation.PreDestroy;
 @RequiredArgsConstructor
 public class WebSocketConfig {
 
-    @Value("${websocket.port}")
+    @Value("${webSocket.port}")
     private int port;
 
     private EventLoopGroup bossGroup;
@@ -52,7 +52,7 @@ public class WebSocketConfig {
                             ch.pipeline().addLast(new ChunkedWriteHandler());
                             ch.pipeline().addLast(new HttpObjectAggregator(8192));
                             ch.pipeline().addLast(webSocketHandler);
-                            ch.pipeline().addLast(new WebSocketServerProtocolHandler("/websocket", null, true, 65536 * 10));
+                            ch.pipeline().addLast(new WebSocketServerProtocolHandler("/webSocket", null, true, 65536 * 10));
                         }
                     });
 

@@ -11,10 +11,7 @@ import java.util.Map;
  * @author hongjc
  * @version 1.0  2020/8/21
  */
-public class WebsocketConstants {
+public class WebSocketConstants {
 
-    public static final Map<String, ChannelGroup> CHANNEL_GROUP_MAP = new HashMap<>(32);
     public static final ChannelGroup CHANNEL_GROUP = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
-
-    public static final String DEFAULT_GROUP_KEY = "jrx";
 }

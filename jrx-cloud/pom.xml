@@ -22,7 +22,7 @@
         <version.mybatis.pagehelper>5.2.0</version.mybatis.pagehelper>
         <version.druid>1.1.23</version.druid>
 
-        <version.netty>4.1.51.Final</version.netty>
+        <version.netty>4.1.63.Final</version.netty>
 
         <version.springfox.swagger>3.0.0</version.springfox.swagger>
         <version.knife4j>2.0.4</version.knife4j>
