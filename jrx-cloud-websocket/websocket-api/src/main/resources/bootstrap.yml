@@ -9,3 +9,6 @@ spring:
       name: websocket-api
       label: master
       profile: ${spring.profiles.active}
+
+logging:
+  config: classpath:log4j2.xml
