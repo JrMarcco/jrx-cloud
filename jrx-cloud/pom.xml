@@ -13,9 +13,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>15</java.version>
 
-        <version.spring>5.2.9.RELEASE</version.spring>
-        <version.spring.boot>2.3.4.RELEASE</version.spring.boot>
-        <version.spring.cloud>Hoxton.SR8</version.spring.cloud>
+        <version.spring>5.3.6.RELEASE</version.spring>
+        <version.spring.boot>2.4.5.RELEASE</version.spring.boot>
+        <version.spring.cloud>2020.0.2</version.spring.cloud>
 
         <version.mysql.connector>8.0.21</version.mysql.connector>
         <version.mybatis.starer>2.1.3</version.mybatis.starer>
@@ -178,7 +178,7 @@
         <repository>
             <id>spring-milestones</id>
             <name>Spring Milestones</name>
-            <url>http://repo.spring.io/milestone</url>
+            <url>https://repo.spring.io/milestone</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
