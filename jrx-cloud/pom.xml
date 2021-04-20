@@ -13,8 +13,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>15</java.version>
 
-        <version.spring>5.3.6.RELEASE</version.spring>
-        <version.spring.boot>2.4.5.RELEASE</version.spring.boot>
+        <version.spring>5.3.6</version.spring>
+        <version.spring.boot>2.4.5</version.spring.boot>
         <version.spring.cloud>2020.0.2</version.spring.cloud>
 
         <version.mysql.connector>8.0.21</version.mysql.connector>
