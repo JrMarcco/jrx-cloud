@@ -11,22 +11,22 @@ import java.util.Map;
  * @version 1.0  2021/4/21
  */
 @Slf4j
-public class RuleService {
+public class RuleExecutor {
 
     private final Map<Integer, List<IRule>> ruleMap = new HashMap<>();
     private static final int AND = 1;
     private static final int OR = 0;
 
-    public static RuleService create() {
-        return new RuleService();
+    public static RuleExecutor create() {
+        return new RuleExecutor();
     }
 
-    public RuleService and(List<IRule> ruleList) {
+    public RuleExecutor and(List<IRule> ruleList) {
         ruleMap.put(AND, ruleList);
         return this;
     }
 
-    public RuleService or(List<IRule> ruleList) {
+    public RuleExecutor or(List<IRule> ruleList) {
         ruleMap.put(OR, ruleList);
         return this;
     }
