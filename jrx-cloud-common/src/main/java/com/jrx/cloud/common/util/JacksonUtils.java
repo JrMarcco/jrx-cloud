@@ -6,10 +6,18 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.ClassStack;
+import com.fasterxml.jackson.databind.type.CollectionType;
+import com.fasterxml.jackson.databind.type.TypeBindings;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.databind.util.ClassUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author hongjc
@@ -27,7 +35,11 @@ public class JacksonUtils {
         OBJECT_MAPPER.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
     }
 
-    public static <T> String toJson(T object) {
+    public static ObjectMapper instance() {
+        return OBJECT_MAPPER;
+    }
+
+    public static <T> String toJsonString(T object) {
         try {
             return OBJECT_MAPPER.writeValueAsString(object);
         } catch (JsonProcessingException e) {
@@ -36,9 +48,20 @@ public class JacksonUtils {
         return null;
     }
 
-    public static <T> T parseJson(String json, Class<T> cls) {
+    public static <T> T parseObject(String json, Class<T> objectClass) {
         try {
-            return OBJECT_MAPPER.readValue(json, cls);
+            return OBJECT_MAPPER.readValue(json, objectClass);
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+        return null;
+    }
+
+    public static <T> List<T> parseList(String json, Class<T> elementClass) {
+        try {
+            return OBJECT_MAPPER.readValue(
+                    json, OBJECT_MAPPER.getTypeFactory().constructCollectionType(List.class, elementClass)
+            );
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }

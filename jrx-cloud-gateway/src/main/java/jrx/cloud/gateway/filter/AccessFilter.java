@@ -75,7 +75,7 @@ public class AccessFilter implements GlobalFilter, Ordered {
 
     private Mono<Void> errorMono(ServerWebExchange exchange, BaseRsp<Void> result) {
         exchange.getResponse().setStatusCode(HttpStatus.OK);
-        var bytes = Optional.ofNullable(JacksonUtils.toJson(result)).map(String::getBytes).orElse(new byte[] {});
+        var bytes = Optional.ofNullable(JacksonUtils.toJsonString(result)).map(String::getBytes).orElse(new byte[] {});
         var buffer = exchange.getResponse().bufferFactory().wrap(bytes);
         return exchange.getResponse().writeWith(Flux.just(buffer));
     }

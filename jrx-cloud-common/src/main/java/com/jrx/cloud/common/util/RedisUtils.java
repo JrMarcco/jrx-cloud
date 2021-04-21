@@ -19,7 +19,7 @@ public class RedisUtils {
     public static <T> T getStringValue(StringRedisTemplate rt, Class<T> cls, String key) {
         try {
             return Optional.ofNullable(rt.opsForValue().get(key))
-                    .map(json -> JacksonUtils.parseJson(json, cls))
+                    .map(json -> JacksonUtils.parseObject(json, cls))
                     .orElse(null);
         } catch (Exception e) {
             log.error("### Read redis string value error，key={}，exception message：{} ###", key, e.getMessage());
@@ -67,7 +67,7 @@ public class RedisUtils {
      * @return 返回缓存的具体对象
      */
     public static <T> T setStringValue(StringRedisTemplate rt, String key, T value, long expire, TimeUnit timeUnit) {
-        var jsonValue = JacksonUtils.toJson(value);
+        var jsonValue = JacksonUtils.toJsonString(value);
         try {
             Assert.notNull(jsonValue, "Redis value must not be null.");
             rt.opsForValue().set(key, jsonValue, expire, timeUnit);
@@ -87,7 +87,7 @@ public class RedisUtils {
      * @return 返回缓存的具体对象
      */
     public static <T> T setStringValuePermanent(StringRedisTemplate rt, String key, T value) {
-        var jsonValue = JacksonUtils.toJson(value);
+        var jsonValue = JacksonUtils.toJsonString(value);
         try {
             Assert.notNull(jsonValue, "Redis value must not be null.");
             rt.opsForValue().set(key, jsonValue);
