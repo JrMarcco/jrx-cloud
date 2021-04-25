@@ -21,7 +21,7 @@ public interface DelimiterHandler {
     }
 
     static String remaining(String s) {
-        int index = s.indexOf(ENUM_DELIMITER);
+        var index = s.indexOf(ENUM_DELIMITER);
         return index == -1 ? s : convert(s.substring(index + 1));
     }
 }
