@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum DataTopicEnum implements DirectDestination, RoutingDestination {
+//    SYS_INFORMATION(DEFAULT_EXCHANGE, "系统消息", SysInformationVo.class),
+
     ;
 
     private final String exchange;

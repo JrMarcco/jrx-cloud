@@ -5,4 +5,5 @@ package com.jrx.cloud.assembly.constant;
  * @version 1.0  2020/8/10
  */
 public interface RabbitMqConstants {
+//    String QUEUE_SYS_INFORMATION = "sys.infomation";
 }
