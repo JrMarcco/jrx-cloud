@@ -18,18 +18,23 @@ public class RabbitMqConfig {
 //        return new AnonymousQueue();
 //    }
 
-    // 发布&订阅
-    @Bean
-    public TopicExchange exchange() {
-        return new TopicExchange(RoutingDestination.DEFAULT_EXCHANGE);
-    }
+//    @Bean
+//    public TopicExchange exchange() {
+//        return new TopicExchange(RoutingDestination.DEFAULT_EXCHANGE);
+//    }
 
-    // 订阅
+    // 发布
 //    @Bean
 //    public Binding bindingExchangeCmdNotice(Queue autoDeleteQueue, TopicExchange exchange) {
 //        return BindingBuilder.bind(autoDeleteQueue).to(exchange).with(DataTopicEnum.GATEWAY_CMD_NOTICE.getDestination());
 //    }
 
+
+    // 订阅
+    @Bean
+    public TopicExchange exchange() {
+        return new TopicExchange(RoutingDestination.DEFAULT_EXCHANGE);
+    }
     // 订阅
 //    @Bean
 //    public Queue cmdRespNoticeQueue() {
