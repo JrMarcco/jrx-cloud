@@ -4,11 +4,13 @@ import com.jrx.cloud.assembly.enums.DataTopicEnum;
 import com.jrx.cloud.assembly.mq.RoutingDestination;
 import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author hongjc
  * @version 1.0  2020/8/10
  */
+@Configuration
 public class RabbitMqConfig {
 
 
