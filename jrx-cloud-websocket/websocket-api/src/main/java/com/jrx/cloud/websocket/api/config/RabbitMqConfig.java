@@ -13,8 +13,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqConfig {
 
+    @Bean
+    public TopicExchange exchange() {
+        return new TopicExchange(RoutingDestination.DEFAULT_EXCHANGE);
+    }
 
-    // 发布
 //    @Bean
 //    public Queue autoDeleteQueue() {
 //        return new AnonymousQueue();
@@ -25,25 +28,17 @@ public class RabbitMqConfig {
 //        return new TopicExchange(RoutingDestination.DEFAULT_EXCHANGE);
 //    }
 
-    // 发布
 //    @Bean
 //    public Binding bindingExchangeCmdNotice(Queue autoDeleteQueue, TopicExchange exchange) {
 //        return BindingBuilder.bind(autoDeleteQueue).to(exchange).with(DataTopicEnum.GATEWAY_CMD_NOTICE.getDestination());
 //    }
 
 
-    // 订阅
-    @Bean
-    public TopicExchange exchange() {
-        return new TopicExchange(RoutingDestination.DEFAULT_EXCHANGE);
-    }
-    // 订阅
 //    @Bean
 //    public Queue cmdRespNoticeQueue() {
 //        return new Queue(RabbitMqConstants.QUEUE_CMD_NOTICE);
 //    }
 
-    // 订阅
 //    @Bean
 //    public Binding bindingExchangeCmdNotice(Queue cmdRespNoticeQueue, TopicExchange exchange) {
 //        return BindingBuilder.bind(cmdRespNoticeQueue).to(exchange).with(DataTopicEnum.GATEWAY_CMD_NOTICE.getDestination());
