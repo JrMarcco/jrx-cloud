@@ -1,6 +1,6 @@
 package com.jrx.cloud.websocket.api.handler;
 
-import com.jrx.cloud.websocket.api.constant.WebSocketConstants;
+import com.jrx.cloud.websocket.api.container.OnlineContainer;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -22,20 +22,23 @@ import java.util.Map;
 @Component
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
-public class WebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class TextSocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+
+    private final OnlineContainer onlineContainer;
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) {
     }
 
     @Override
-    public void channelActive(ChannelHandlerContext ctx) {
-        WebSocketConstants.CHANNEL_GROUP.add(ctx.channel());
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        super.channelActive(ctx);
     }
 
     @Override
-    public void channelInactive(ChannelHandlerContext ctx) {
-        WebSocketConstants.CHANNEL_GROUP.remove(ctx.channel());
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        super.channelInactive(ctx);
+        onlineContainer.remove(ctx.channel().id().asLongText());
     }
 
     @Override
