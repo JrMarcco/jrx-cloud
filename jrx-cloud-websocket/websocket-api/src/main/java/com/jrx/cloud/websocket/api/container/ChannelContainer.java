@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Data
 @Component
-public class OnlineContainer {
+public class ChannelContainer {
 
     /*
      * <userId,channelId>

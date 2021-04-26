@@ -68,6 +68,6 @@ public class BaseRsp<T> implements Serializable {
     }
 
     protected Boolean isSuccess() {
-        return !StringUtils.isEmpty(code) && BaseConstants.RESULT_CODE_SUCCESS.equals(code);
+        return StringUtils.hasLength(code) && BaseConstants.RESULT_CODE_SUCCESS.equals(code);
     }
 }
