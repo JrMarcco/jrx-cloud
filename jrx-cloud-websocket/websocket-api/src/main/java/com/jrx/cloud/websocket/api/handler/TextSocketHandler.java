@@ -1,11 +1,12 @@
 package com.jrx.cloud.websocket.api.handler;
 
 import com.jrx.cloud.websocket.api.container.ChannelContainer;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.*;
+import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.util.CharsetUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -54,9 +55,15 @@ public class TextSocketHandler extends SimpleChannelInboundHandler<TextWebSocket
     // ----------------------------------------< Private Method>----------------------------------------
 
     private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest request) {
-        var uri = request.uri();
+        var httpHeaders = request.headers();
+        if (!request.decoderResult().isSuccess() || (!"websocket".equals(request.headers().get("Upgrade")))) {
+            sendHttpResponse(ctx, request, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
+            return;
+        }
 
-        log.info("### Receive connect request: {} ###", uri);
+        // 权限校验
+
+        sendHttpResponse(ctx, request, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.FORBIDDEN));
     }
 
     private void handlerWebSocketFrame(ChannelHandlerContext ctx, TextWebSocketFrame msg) {
@@ -77,5 +84,18 @@ public class TextSocketHandler extends SimpleChannelInboundHandler<TextWebSocket
             Arrays.stream(url.split(";")[1].split("&")).forEach(str -> map.put(str.split("=")[0], str.split("=")[1]));
         }
         return map;
+    }
+
+    private void sendHttpResponse(ChannelHandlerContext ctx, FullHttpRequest request, DefaultFullHttpResponse response) {
+        if (!HttpResponseStatus.OK.equals(response.status())) {
+            var byteBuf = Unpooled.copiedBuffer(response.status().toString(), CharsetUtil.UTF_8);
+            response.content().writeBytes(byteBuf);
+            byteBuf.release();
+        }
+
+        var channelFuture = ctx.channel().writeAndFlush(response);
+        if (!HttpUtil.isKeepAlive(request) || !HttpResponseStatus.OK.equals(response.status())) {
+            channelFuture.addListener(ChannelFutureListener.CLOSE);
+        }
     }
 }
