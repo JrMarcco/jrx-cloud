@@ -2,12 +2,17 @@ package com.jrx.cloud.websocket.api.handler;
 
 import com.jrx.cloud.websocket.api.container.SingleOnlineContainer;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.*;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketServerHandshakerFactory;
 import io.netty.util.CharsetUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -22,7 +27,10 @@ import java.util.Map;
 @Component
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
-public class SingleOnlineHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class WebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+
+    @Value("${webSocket.url:}")
+    private String webSocketURL;
 
     private final SingleOnlineContainer singleOnlineContainer;
 
@@ -64,6 +72,15 @@ public class SingleOnlineHandler extends SimpleChannelInboundHandler<TextWebSock
 
         // 权限校验
         var requestParams = getUriParams(uri);
+
+        // 返回握手信息
+        var webSocketServerHandshakerFactory = new WebSocketServerHandshakerFactory(webSocketURL, null, false);
+        var handshaker = webSocketServerHandshakerFactory.newHandshaker(request);
+        if (handshaker == null) {
+            WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
+        } else {
+            handshaker.handshake(ctx.channel(), request);
+        }
 
         sendHttpResponse(ctx, request, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.FORBIDDEN));
     }
