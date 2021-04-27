@@ -1,7 +1,6 @@
 package com.jrx.cloud.websocket.api.handler;
 
-import com.jrx.cloud.websocket.api.container.ChannelContainer;
-import io.netty.buffer.ByteBuf;
+import com.jrx.cloud.websocket.api.container.SingleOnlineContainer;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.handler.codec.http.*;
@@ -23,9 +22,9 @@ import java.util.Map;
 @Component
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
-public class TextSocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class SingleOnlineHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
-    private final ChannelContainer channelContainer;
+    private final SingleOnlineContainer singleOnlineContainer;
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) {
@@ -39,7 +38,7 @@ public class TextSocketHandler extends SimpleChannelInboundHandler<TextWebSocket
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
-        channelContainer.remove(ctx.channel().id().asLongText());
+        singleOnlineContainer.remove(ctx.channel().id().asLongText());
     }
 
     @Override

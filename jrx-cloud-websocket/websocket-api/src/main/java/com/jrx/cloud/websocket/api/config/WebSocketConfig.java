@@ -1,6 +1,6 @@
 package com.jrx.cloud.websocket.api.config;
 
-import com.jrx.cloud.websocket.api.handler.TextSocketHandler;
+import com.jrx.cloud.websocket.api.handler.SingleOnlineHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -34,7 +34,7 @@ public class WebSocketConfig {
     private EventLoopGroup bossGroup;
     private EventLoopGroup workerGroup;
 
-    private final TextSocketHandler textSocketHandler;
+    private final SingleOnlineHandler singleOnlineHandler;
 
     public void start() {
         bossGroup = new NioEventLoopGroup();
@@ -51,7 +51,7 @@ public class WebSocketConfig {
                             ch.pipeline().addLast(new HttpServerCodec());
                             ch.pipeline().addLast(new ChunkedWriteHandler());
                             ch.pipeline().addLast(new HttpObjectAggregator(8192));
-                            ch.pipeline().addLast(textSocketHandler);
+                            ch.pipeline().addLast(singleOnlineHandler);
                             ch.pipeline().addLast(new WebSocketServerProtocolHandler("/webSocket", null, true, 65536 * 10));
                         }
                     });
