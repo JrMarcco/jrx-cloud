@@ -1,6 +1,5 @@
 package com.jrx.cloud.websocket.api.container;
 
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.Data;
@@ -48,7 +47,6 @@ public class SingleOnlineContainer {
         if (StringUtils.hasLength(channelId) && userChannelIdMap.containsValue(channelId)) {
             for (Map.Entry<String, String> entry : userChannelIdMap.entrySet()) {
                 if (channelId.equals(entry.getValue())) {
-                    disconnectChannel(channelId);
                     userChannelIdMap.remove(entry.getKey());
                     break;
                 }
@@ -72,8 +70,8 @@ public class SingleOnlineContainer {
         if (StringUtils.hasLength(channelId)) {
             ChannelHandlerContext connectedChannel = channelGroup.getOrDefault(channelId, null);
             if (connectedChannel != null) {
+                connectedChannel.fireChannelInactive();
                 log.info("### Disconnect and close channel {}.. ###", channelId);
-                connectedChannel.disconnect().addListener(ChannelFutureListener.CLOSE);
             }
         }
     }
