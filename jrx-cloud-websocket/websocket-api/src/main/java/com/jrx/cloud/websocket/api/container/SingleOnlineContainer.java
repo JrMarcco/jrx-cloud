@@ -4,6 +4,7 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -14,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author hongjc
  * @version 1.0  2021/4/26
  */
+@Slf4j
 @Data
 @Component
 public class SingleOnlineContainer {
@@ -35,14 +37,9 @@ public class SingleOnlineContainer {
     }
 
     public void put(String userId, ChannelHandlerContext ctx) {
-        var connectedId = userChannelIdMap.getOrDefault(userId, null);
-        if (StringUtils.hasLength(connectedId)) {
-            ChannelHandlerContext connectedChannel = channelGroup.getOrDefault(connectedId, null);
-            if (connectedChannel != null) {
-                connectedChannel.disconnect().addListener(ChannelFutureListener.CLOSE);
-            }
-        }
+        disconnectChannel(userChannelIdMap.getOrDefault(userId, null));
 
+        log.info("### Channel {} is connected. ###", ctx.channel().id().asLongText());
         userChannelIdMap.put(userId, ctx.channel().id().asLongText());
         channelGroup.put(ctx.channel().id().asLongText(), ctx);
     }
@@ -51,6 +48,7 @@ public class SingleOnlineContainer {
         if (StringUtils.hasLength(channelId) && userChannelIdMap.containsValue(channelId)) {
             for (Map.Entry<String, String> entry : userChannelIdMap.entrySet()) {
                 if (channelId.equals(entry.getValue())) {
+                    disconnectChannel(channelId);
                     userChannelIdMap.remove(entry.getKey());
                     break;
                 }
@@ -67,6 +65,16 @@ public class SingleOnlineContainer {
         var channel = get(userId);
         if (channel != null) {
             channel.writeAndFlush(new TextWebSocketFrame(msgContent));
+        }
+    }
+
+    private void disconnectChannel(String channelId) {
+        if (StringUtils.hasLength(channelId)) {
+            ChannelHandlerContext connectedChannel = channelGroup.getOrDefault(channelId, null);
+            if (connectedChannel != null) {
+                log.info("### Disconnect and close channel {}.. ###", channelId);
+                connectedChannel.disconnect().addListener(ChannelFutureListener.CLOSE);
+            }
         }
     }
 }
