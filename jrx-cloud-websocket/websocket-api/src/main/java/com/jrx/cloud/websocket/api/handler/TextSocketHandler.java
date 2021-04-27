@@ -55,7 +55,8 @@ public class TextSocketHandler extends SimpleChannelInboundHandler<TextWebSocket
     // ----------------------------------------< Private Method>----------------------------------------
 
     private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest request) {
-        var httpHeaders = request.headers();
+        var uri = request.uri();
+
         if (!request.decoderResult().isSuccess() || (!"websocket".equals(request.headers().get("Upgrade")))) {
             sendHttpResponse(ctx, request, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
             return;
