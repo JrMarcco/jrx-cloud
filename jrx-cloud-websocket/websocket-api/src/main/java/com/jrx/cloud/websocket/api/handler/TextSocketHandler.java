@@ -55,7 +55,8 @@ public class TextSocketHandler extends SimpleChannelInboundHandler<TextWebSocket
     // ----------------------------------------< Private Method>----------------------------------------
 
     private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest request) {
-        var requestParams = getUriParams(request.uri());
+        var uri = request.uri();
+        log.info("### Receive connect request: {} ###", uri);
 
         if (!request.decoderResult().isSuccess() || (!"websocket".equals(request.headers().get("Upgrade")))) {
             sendHttpResponse(ctx, request, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
@@ -63,6 +64,7 @@ public class TextSocketHandler extends SimpleChannelInboundHandler<TextWebSocket
         }
 
         // 权限校验
+        var requestParams = getUriParams(uri);
 
         sendHttpResponse(ctx, request, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.FORBIDDEN));
     }
