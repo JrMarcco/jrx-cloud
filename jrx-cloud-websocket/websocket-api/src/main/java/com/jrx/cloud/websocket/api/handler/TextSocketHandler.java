@@ -55,7 +55,7 @@ public class TextSocketHandler extends SimpleChannelInboundHandler<TextWebSocket
     // ----------------------------------------< Private Method>----------------------------------------
 
     private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest request) {
-        var uri = request.uri();
+        var requestParams = getUriParams(request.uri());
 
         if (!request.decoderResult().isSuccess() || (!"websocket".equals(request.headers().get("Upgrade")))) {
             sendHttpResponse(ctx, request, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
@@ -74,15 +74,15 @@ public class TextSocketHandler extends SimpleChannelInboundHandler<TextWebSocket
         ctx.writeAndFlush(new TextWebSocketFrame(""));
     }
 
-    private Map<String, Object> getUrlParams(String url) {
+    private Map<String, Object> getUriParams(String uri) {
         var map = new HashMap<String, Object>();
 
-        url = url.replace("?", ";");
-        if (!url.contains(";")) {
+        uri = uri.replace("?", ";");
+        if (!uri.contains(";")) {
             return map;
         }
-        if (url.split(";").length > 0) {
-            Arrays.stream(url.split(";")[1].split("&")).forEach(str -> map.put(str.split("=")[0], str.split("=")[1]));
+        if (uri.split(";").length > 0) {
+            Arrays.stream(uri.split(";")[1].split("&")).forEach(str -> map.put(str.split("=")[0], str.split("=")[1]));
         }
         return map;
     }
