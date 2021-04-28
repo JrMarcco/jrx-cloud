@@ -39,11 +39,10 @@ public class MultiOnlineContainer {
         log.info("### Channel {} is connected. ###", ctx.channel().id().asLongText());
     }
 
-    public void remove(ChannelHandlerContext ctx) {
-        userChannelGroupMap.values().forEach(channels -> channels.remove(ctx.channel()));
-
-        log.info("### Disconnect and close channel {}. ###", ctx.channel().id());
-        ctx.disconnect().addListener(ChannelFutureListener.CLOSE);
+    public void remove(Channel channel) {
+        userChannelGroupMap.values().forEach(channels -> channels.remove(channel));
+        log.info("### Disconnect and close channel {}. ###", channel.id());
+        channel.disconnect().addListener(ChannelFutureListener.CLOSE);
     }
 
     public void sendTextMsg(String msgContent) {

@@ -7,8 +7,7 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import io.netty.handler.codec.http.websocketx.WebSocketServerHandshakerFactory;
+import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +26,7 @@ import java.util.Map;
 @Component
 @ChannelHandler.Sharable
 @RequiredArgsConstructor
-public class WebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
 
     @Value("${webSocket.url:}")
     private String webSocketURL;
@@ -35,7 +34,12 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
     private final SingleOnlineContainer singleOnlineContainer;
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) {
+    protected void channelRead0(ChannelHandlerContext ctx, Object msg) {
+        if (msg instanceof FullHttpRequest) {
+            handleHttpRequest(ctx, (FullHttpRequest) msg);
+        } else {
+            handlerWebSocketFrame(ctx, (WebSocketFrame) msg);
+        }
     }
 
     @Override
@@ -47,16 +51,6 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         super.channelInactive(ctx);
         singleOnlineContainer.remove(ctx.channel().id().asLongText());
-    }
-
-    @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        if (msg instanceof FullHttpRequest) {
-            handleHttpRequest(ctx, (FullHttpRequest) msg);
-        } else if (msg instanceof TextWebSocketFrame) {
-            handlerWebSocketFrame(ctx, (TextWebSocketFrame) msg);
-        }
-        super.channelRead(ctx, msg);
     }
 
     // ----------------------------------------< Private Method>----------------------------------------
@@ -85,7 +79,26 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
         sendHttpResponse(ctx, request, new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.FORBIDDEN));
     }
 
-    private void handlerWebSocketFrame(ChannelHandlerContext ctx, TextWebSocketFrame msg) {
+    private void handlerWebSocketFrame(ChannelHandlerContext ctx, WebSocketFrame webSocketFrame) {
+        if (webSocketFrame instanceof CloseWebSocketFrame) {
+            var channel = ctx.channel();
+            if (channel != null) {
+                singleOnlineContainer.remove(channel.id().asLongText());
+                channel.writeAndFlush(webSocketFrame, channel.newPromise()).addListener(ChannelFutureListener.CLOSE);
+            }
+            return;
+        }
+        if (webSocketFrame instanceof PingWebSocketFrame) {
+            ctx.channel().write(new PongWebSocketFrame(webSocketFrame.content().retain()));
+            return;
+        }
+        if (webSocketFrame instanceof TextWebSocketFrame) {
+            handlerTextSocketFrame(ctx, (TextWebSocketFrame) webSocketFrame);
+        }
+
+    }
+
+    private void handlerTextSocketFrame(ChannelHandlerContext ctx, TextWebSocketFrame msg) {
         var json = msg.text();
         log.info("### Receive text message: {} ###", json);
 
