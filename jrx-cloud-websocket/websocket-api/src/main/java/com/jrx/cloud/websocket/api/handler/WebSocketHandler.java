@@ -84,7 +84,7 @@ public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
             var channel = ctx.channel();
             if (channel != null) {
                 singleOnlineContainer.remove(channel.id().asLongText());
-                channel.writeAndFlush(webSocketFrame, channel.newPromise()).addListener(ChannelFutureListener.CLOSE);
+                channel.writeAndFlush(webSocketFrame.retain(), channel.newPromise()).addListener(ChannelFutureListener.CLOSE);
             }
             return;
         }
