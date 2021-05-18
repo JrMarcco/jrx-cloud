@@ -16,7 +16,7 @@ public class ApplicationContextUtils {
         }
     }
 
-    public static <T> T getBean(Class<T> t) {
-        return context.getBean(t);
+    public static <T> T getBean(Class<T> cls) {
+        return context.getBean(cls);
     }
 }
