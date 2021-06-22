@@ -8,7 +8,7 @@ spring:
       discovery:
         serviceId: jrx-cloud-config
         enabled: true
-      name: api-gateway, hystrix
+      name: api-gateway
       label: master
       profile: ${spring.profiles.active}
     gateway:
