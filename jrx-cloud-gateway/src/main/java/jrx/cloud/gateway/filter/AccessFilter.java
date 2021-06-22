@@ -25,7 +25,6 @@ import java.util.Optional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-
 public class AccessFilter implements GlobalFilter, Ordered {
 
     private final GatewayConfiguration gatewayConfiguration;

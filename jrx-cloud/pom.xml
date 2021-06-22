@@ -13,9 +13,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>15</java.version>
 
-        <version.spring>5.3.6</version.spring>
-        <version.spring.boot>2.4.5</version.spring.boot>
-        <version.spring.cloud>2020.0.2</version.spring.cloud>
+        <version.spring>5.3.8</version.spring>
+        <version.spring.boot>2.5.1</version.spring.boot>
+        <version.spring.cloud>2020.0.3</version.spring.cloud>
 
         <version.mysql.connector>8.0.24</version.mysql.connector>
         <version.mybatis.starer>2.1.4</version.mybatis.starer>

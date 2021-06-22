@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>jrx.cloud.gateway</groupId>
+    <groupId>com.jrx.cloud.gateway</groupId>
     <artifactId>jrx-cloud-gateway</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
@@ -24,13 +24,13 @@
         <dependency>
             <groupId>com.jrx.cloud.assembly</groupId>
             <artifactId>jrx-cloud-assembly</artifactId>
-            <version>${version.jrx.cloud.assembly}</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.jrx.cloud.common</groupId>
             <artifactId>jrx-cloud-common</artifactId>
-            <version>${version.jrx.cloud.common}</version>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <!-- Spring Boot Dependency -->
