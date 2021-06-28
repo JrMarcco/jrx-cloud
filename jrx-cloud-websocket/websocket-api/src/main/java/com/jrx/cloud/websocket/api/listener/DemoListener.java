@@ -14,7 +14,7 @@ import java.io.IOException;
  * @version 1.0  2021/4/25
  */
 @Slf4j
-@Component
+//@Component
 public class DemoListener {
 
 //    @RabbitListener(queues = {RabbitMqConstants.QUEUE_SYS_INFORMATION})

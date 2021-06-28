@@ -1,12 +1,18 @@
+server:
+  port: 18000
+
 spring:
   profiles:
     active: dev
+  application:
+    name: jrx-cloud-websocket
   cloud:
     config:
+      enabled: false
       discovery:
         serviceId: jrx-cloud-config
         enabled: true
-      name: websocket-api
+      name: websocket-api, rabbitmq
       label: master
       profile: ${spring.profiles.active}
 
