@@ -4,12 +4,10 @@ server:
 spring:
   application:
     name: jrx-cloud-user
-
-eureka:
-  instance:
-    leaseRenewalIntervalInSeconds: 1
-    leaseExpirationDurationInSeconds: 2
-    health-check-url-path: /actuator/health
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:18000/eureka/
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+        health-check-path: /actuator/health

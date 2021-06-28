@@ -8,13 +8,13 @@ spring:
       discovery:
         serviceId: jrx-cloud-config
         enabled: true
-      name: api-gateway
+      name: api-gateway, resilience4j
       label: master
       profile: ${spring.profiles.active}
     gateway:
       discovery:
         locator:
-          enabled: false
+          enabled: true
           lowerCaseServiceId: true
       routes:
         - id: user-api
@@ -22,7 +22,8 @@ spring:
           predicates:
             - Path=/user/**
           filters:
-            - StripPrefix=1
+            - RewritePath=/user/(?<path>.*), /${path} # 将 /user 前缀剔除
+
 jrx:
   gateway:
     ignorePaths: /auth/jwt
@@ -30,12 +31,12 @@ jrx:
 
 ---
 spring:
-  profiles: dev
-eureka:
-  instance:
-    leaseRenewalIntervalInSeconds: 1
-    leaseExpirationDurationInSeconds: 2
-    health-check-url-path: /actuator/health
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:18000/eureka/
+  profiles:
+    group: dev
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+        health-check-path: /actuator/health
