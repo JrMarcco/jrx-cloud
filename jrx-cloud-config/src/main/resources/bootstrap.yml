@@ -5,15 +5,6 @@ spring:
     active: dev
   application:
     name: jrx-cloud-config
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://github.com/JrMarcco/jrmarcco-config-server-repo.git
-          searchPaths: /*, common/*
-          username:
-          password:
-          basedir: jrx-test-config/config-repo
 
 encrypt:
   key-store:
@@ -24,12 +15,26 @@ encrypt:
 
 ---
 spring:
-  profiles:
-    group: dev
+  config:
+    activate:
+      on-profile: dev
   cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/JrMarcco/jrx-config-server-repo.git
+          search-paths: /*, common/*
+          username:
+          password:
+          basedir: jrx-test-config/config-repo
     consul:
       host: 127.0.0.1
       port: 8500
       discovery:
         service-name: ${spring.application.name}
         health-check-path: /actuator/health
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: jrmarcco
+    password: util

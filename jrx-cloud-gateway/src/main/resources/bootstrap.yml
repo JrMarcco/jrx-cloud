@@ -31,8 +31,9 @@ jrx:
 
 ---
 spring:
-  profiles:
-    group: dev
+  config:
+    activate:
+      on-profile: dev
   cloud:
     consul:
       host: 127.0.0.1

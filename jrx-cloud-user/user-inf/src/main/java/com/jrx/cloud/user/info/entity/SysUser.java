@@ -1,12 +1,11 @@
 package com.jrx.cloud.user.info.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.jrx.cloud.assembly.constant.JsonConstants;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,6 +17,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 public class SysUser implements Serializable {
+    @Serial
     private static final long serialVersionUID = -7523965974668710420L;
 
     @ApiModelProperty("主键id")
@@ -39,10 +39,8 @@ public class SysUser implements Serializable {
     @ApiModelProperty("用户角色主键id")
     private Integer roleId;
     @ApiModelProperty("创建时间")
-    @JsonFormat(pattern = JsonConstants.DATE_TIME_PATTERN, timezone = JsonConstants.TIME_ZONE_GMT8)
     private Date createTime;
     @ApiModelProperty("修改时间")
-    @JsonFormat(pattern = JsonConstants.DATE_TIME_PATTERN, timezone = JsonConstants.TIME_ZONE_GMT8)
     private Date updateTime;
     @ApiModelProperty("是否已删除")
     private Character isDeleted;
