@@ -1,0 +1,1 @@
+keytool -genkeypair -alias config-server-key -keyalg RSA -keysize 4096 -sigalg SHA512withRSA -dname "CN=Config Server,OU=JrMarcco,O=JrMarcco,L=Xiamen,ST=Fujian,C=China" -keypass jrmarcco -keystore config-server.jks-storepass jrmarcco -validity 365

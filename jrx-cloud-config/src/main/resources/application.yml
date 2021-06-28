@@ -23,6 +23,7 @@ spring:
       server:
         git:
           uri: https://github.com/JrMarcco/jrx-config-server-repo.git
+          default-label: master
           search-paths: /*, common/*
           username:
           password:
