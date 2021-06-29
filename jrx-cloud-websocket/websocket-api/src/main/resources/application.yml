@@ -1,6 +1,3 @@
-server:
-  port: 18000
-
 spring:
   profiles:
     active: dev
@@ -8,7 +5,7 @@ spring:
     name: jrx-cloud-websocket
   cloud:
     config:
-      enabled: false
+      enabled: true
       discovery:
         serviceId: jrx-cloud-config
         enabled: true
@@ -18,3 +15,17 @@ spring:
 
 logging:
   config: classpath:log4j2.xml
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+    import: optional:configserver:http://127.0.0.1:18100/
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+        health-check-path: /actuator/health

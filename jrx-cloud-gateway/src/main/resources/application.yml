@@ -5,6 +5,7 @@ spring:
     name: jrx-cloud-gateway
   cloud:
     config:
+      enabled: true
       discovery:
         serviceId: jrx-cloud-config
         enabled: true
@@ -34,6 +35,7 @@ spring:
   config:
     activate:
       on-profile: dev
+    import: optional:configserver:http://127.0.0.1:18100/
   cloud:
     consul:
       host: 127.0.0.1

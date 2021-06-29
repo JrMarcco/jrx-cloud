@@ -28,7 +28,7 @@ import javax.annotation.PreDestroy;
 @RequiredArgsConstructor
 public class WebSocketConfig {
 
-    @Value("${webSocket.port:18855}")
+    @Value("${websocket.port}")
     private int port;
 
     private EventLoopGroup bossGroup;
