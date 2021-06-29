@@ -15,6 +15,6 @@ public class NettyServerStarter {
     public static void main(String[] args) {
         SpringApplication.run(NettyServerStarter.class, args);
 
-        log.info("### WebSocket Server Has Already Started ###");
+        log.info("### Netty Server Has Already Started ###");
     }
 }
