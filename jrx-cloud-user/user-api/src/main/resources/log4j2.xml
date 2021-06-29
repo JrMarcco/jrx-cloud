@@ -4,7 +4,7 @@
 
     <Properties>
         <property name="DIR" value="./logs"/>
-        <property name="FILENAME" value="user-api"/>
+        <property name="FILENAME" value="user-api.log"/>
 
         <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
         <Property name="LOG_LEVEL_PATTERN">%5p</Property>
