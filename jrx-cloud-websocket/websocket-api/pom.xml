@@ -15,12 +15,12 @@
     <dependencies>
         <!-- Jrx Cloud Dependency -->
         <dependency>
-            <groupId>com.jrx.cloud.assembly</groupId>
+            <groupId>com.jrx.cloud</groupId>
             <artifactId>jrx-cloud-assembly</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.jrx.cloud.common</groupId>
+            <groupId>com.jrx.cloud</groupId>
             <artifactId>jrx-cloud-common</artifactId>
         </dependency>
 

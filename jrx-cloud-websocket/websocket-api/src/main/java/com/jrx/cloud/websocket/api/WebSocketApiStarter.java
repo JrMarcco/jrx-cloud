@@ -21,13 +21,11 @@ import org.springframework.context.annotation.ComponentScan;
 @Slf4j
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan(basePackageClasses = {JacksonConfig.class, ApplicationContextListener.class, ConfigPackage.class, ContainerPackage.class, HandlerPackage.class, ListenerPackage.class})
+@ComponentScan(basePackageClasses = {JacksonConfig.class, ConfigPackage.class, ContainerPackage.class, HandlerPackage.class, ListenerPackage.class})
 public class WebSocketApiStarter {
 
     public static void main(String[] args) {
         SpringApplication.run(WebSocketApiStarter.class, args);
         log.info("### WebSocket Server Has Already Started ###");
-
-        ApplicationContextUtils.getBean(WebSocketConfig.class).start();
     }
 }

@@ -2,6 +2,7 @@ package com.jrx.cloud.websocket.api.config;
 
 import com.jrx.cloud.websocket.api.handler.WebSocketHandler;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 /**
@@ -31,15 +33,15 @@ public class WebSocketConfig {
     @Value("${websocket.port}")
     private int port;
 
-    private EventLoopGroup bossGroup;
-    private EventLoopGroup workerGroup;
+    private final EventLoopGroup bossGroup = new NioEventLoopGroup();
+    private final EventLoopGroup workerGroup = new NioEventLoopGroup();
+    private Channel channel;
 
     private final WebSocketHandler webSocketHandler;
 
-    public void start() {
-        bossGroup = new NioEventLoopGroup();
-        workerGroup = new NioEventLoopGroup();
 
+    @PostConstruct
+    public void start() {
         try {
             var serverBootstrap = new ServerBootstrap();
             serverBootstrap.option(ChannelOption.SO_BACKLOG, 1024)
@@ -58,8 +60,11 @@ public class WebSocketConfig {
 
             var channelFuture = serverBootstrap.bind(port).sync();
             channelFuture.channel().closeFuture().sync();
+            if (channelFuture.isSuccess()) {
+                channel = channelFuture.channel();
+                log.info("### WebSocket Server Has Already Started On {} ###", port);
+            }
 
-            log.info("### WebSocket Server Has Already Started On {} ###", port);
         } catch (InterruptedException e) {
             log.info("### WebSocket Server Fail To Start: {} ###", e.getMessage(), e);
             bossGroup.shutdownGracefully();
@@ -69,6 +74,9 @@ public class WebSocketConfig {
 
     @PreDestroy
     public void close() {
+        if (channel != null) {
+            channel.close();
+        }
         bossGroup.shutdownGracefully();
         workerGroup.shutdownGracefully();
     }

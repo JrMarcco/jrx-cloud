@@ -22,15 +22,15 @@
     <dependencies>
         <!-- Jrx Cloud Dependency -->
         <dependency>
-            <groupId>com.jrx.cloud.assembly</groupId>
+            <groupId>com.jrx.cloud</groupId>
             <artifactId>jrx-cloud-assembly</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${version.jrx.cloud.assembly}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.jrx.cloud.common</groupId>
+            <groupId>com.jrx.cloud</groupId>
             <artifactId>jrx-cloud-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${version.jrx.cloud.common}</version>
         </dependency>
 
         <!-- Spring Boot Dependency -->

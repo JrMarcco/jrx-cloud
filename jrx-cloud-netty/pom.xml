@@ -9,27 +9,27 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jrx.cloud.user</groupId>
-    <artifactId>jrx-cloud-user</artifactId>
+    <groupId>com.jrx.cloud.netty</groupId>
+    <artifactId>jrx-cloud-netty</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>user-inf</module>
-        <module>user-api</module>
+        <module>netty-common</module>
+        <module>netty-server</module>
     </modules>
 
     <properties>
-        <version.jrx.cloud.user>1.0-SNAPSHOT</version.jrx.cloud.user>
+        <version.jrx.cloud.netty>1.0-SNAPSHOT</version.jrx.cloud.netty>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!-- Jrx Cloud User Dependency -->
+            <!-- Jrx Cloud Netty Dependency -->
             <dependency>
-                <groupId>com.jrx.cloud.user</groupId>
-                <artifactId>user-inf</artifactId>
-                <version>${version.jrx.cloud.user}</version>
+                <groupId>com.jrx.cloud.netty</groupId>
+                <artifactId>netty-common</artifactId>
+                <version>${version.jrx.cloud.netty}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

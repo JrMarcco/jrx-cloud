@@ -13,6 +13,7 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- Jrx Cloud User Dependency -->
         <dependency>
             <groupId>com.jrx.cloud.user</groupId>
             <artifactId>user-inf</artifactId>

@@ -18,29 +18,6 @@
         <module>websocket-api</module>
     </modules>
 
-    <properties>
-        <version.jrx.cloud.assembly>1.0-SNAPSHOT</version.jrx.cloud.assembly>
-        <version.jrx.cloud.common>1.0-SNAPSHOT</version.jrx.cloud.common>
-        <version.jrx.cloud.user>1.0-SNAPSHOT</version.jrx.cloud.user>
-    </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <!-- Jrx Cloud Dependency -->
-            <dependency>
-                <groupId>com.jrx.cloud.assembly</groupId>
-                <artifactId>jrx-cloud-assembly</artifactId>
-                <version>${version.jrx.cloud.assembly}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.jrx.cloud.common</groupId>
-                <artifactId>jrx-cloud-common</artifactId>
-                <version>${version.jrx.cloud.common}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <build>
         <plugins>
             <plugin>
