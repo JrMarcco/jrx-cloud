@@ -58,7 +58,9 @@ public class NettyServer {
                     .option(ChannelOption.SO_BACKLOG, 1024) // 服务端 accept 队列的大小
                     .childOption(ChannelOption.SO_KEEPALIVE, true) // TCP KeepAlive 机制，实现 TCP 层级的心跳保活功能
                     .childOption(ChannelOption.TCP_NODELAY, true) // 允许较小的数据包的发送，降低延迟
-                    .childHandler(nettyServerHandlerInitializer);
+                    .childHandler(nettyServerHandlerInitializer)
+            ;
+
             // <绑定端口，并同步等待成功，即启动服务端
             var channelFuture = serverBootstrap.bind().sync();
             if (channelFuture.isSuccess()) {
@@ -77,11 +79,9 @@ public class NettyServer {
      */
     @PreDestroy
     public void shutdown() {
-        // 关闭 Netty Server
         if (channel != null) {
             channel.close();
         }
-        // 优雅关闭两个 EventLoopGroup 对象
         bossGroup.shutdownGracefully();
         workerGroup.shutdownGracefully();
     }

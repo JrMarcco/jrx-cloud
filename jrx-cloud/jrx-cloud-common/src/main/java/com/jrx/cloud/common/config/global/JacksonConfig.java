@@ -1,4 +1,4 @@
-package com.jrx.cloud.common.config.springboot;
+package com.jrx.cloud.common.config.global;
 
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;

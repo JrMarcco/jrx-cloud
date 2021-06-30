@@ -25,8 +25,8 @@ spring:
           uri: https://github.com/JrMarcco/jrx-config-server-repo.git
           default-label: master
           search-paths: /*, common/*
-          username:
-          password:
+          username: JrMarcco@gmail.com
+          password: JrMarcco!0
           basedir: jrx-test-config/config-repo
     consul:
       host: 127.0.0.1

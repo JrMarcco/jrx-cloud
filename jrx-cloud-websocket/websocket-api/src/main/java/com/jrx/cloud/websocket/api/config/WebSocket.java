@@ -28,7 +28,7 @@ import javax.annotation.PreDestroy;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class WebSocketConfig {
+public class WebSocket {
 
     @Value("${websocket.port}")
     private int port;

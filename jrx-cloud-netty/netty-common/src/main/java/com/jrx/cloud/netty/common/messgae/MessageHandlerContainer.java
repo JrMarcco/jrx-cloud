@@ -18,6 +18,7 @@ import java.util.Objects;
  */
 @Slf4j
 @RequiredArgsConstructor
+@SuppressWarnings("rawtypes")
 public class MessageHandlerContainer implements InitializingBean {
 
     /**
@@ -28,7 +29,7 @@ public class MessageHandlerContainer implements InitializingBean {
     private final ApplicationContext applicationContext;
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         // 通过 ApplicationContext 获得所有 MessageHandler Bean
         applicationContext.getBeansOfType(MessageHandler.class).values()
                 .forEach(messageHandler -> handlerMap.put(messageHandler.getType(), messageHandler));
@@ -55,12 +56,12 @@ public class MessageHandlerContainer implements InitializingBean {
      * @param handler 处理器
      * @return 消息类
      */
-    static Class<? extends Message> getMessageClass(MessageHandler handler) {
+    public static Class<? extends Message> getMessageClass(MessageHandler handler) {
         // 获得 Bean 对应的 Class 类名。因为有可能被 AOP 代理过。
-        Class<?> targetClass = AopProxyUtils.ultimateTargetClass(handler);
+        var targetClass = AopProxyUtils.ultimateTargetClass(handler);
         // 获得接口的 Type 数组
         var interfaces = targetClass.getGenericInterfaces();
-        Class<?> superclass = targetClass.getSuperclass();
+        var superclass = targetClass.getSuperclass();
         while (0 == interfaces.length && Objects.nonNull(superclass)) {
             // 以父类的接口为准
             interfaces = superclass.getGenericInterfaces();

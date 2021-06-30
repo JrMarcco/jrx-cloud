@@ -17,6 +17,7 @@
     <modules>
         <module>netty-common</module>
         <module>netty-server</module>
+        <module>netty-client</module>
     </modules>
 
     <properties>
