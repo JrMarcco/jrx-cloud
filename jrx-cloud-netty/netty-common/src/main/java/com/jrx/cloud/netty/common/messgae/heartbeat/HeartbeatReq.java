@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
  * @version 1.0  2021/6/30
  */
 @NoArgsConstructor
-public class HeartbeatRequest implements Message {
+public class HeartbeatReq implements Message {
 
     public static final String TYPE = "HEARTBEAT_REQUEST";
 
     @Override
     public String toString() {
-        return "HeartbeatRequest{}";
+        return "HeartbeatReq: {}";
     }
 }

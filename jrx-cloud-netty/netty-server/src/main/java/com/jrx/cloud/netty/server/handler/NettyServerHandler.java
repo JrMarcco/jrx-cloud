@@ -32,7 +32,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        log.error("### [exception] an exception has occurred on connection {} ### ", ctx.channel().id(), cause);
+        log.error("### [exception] Exception has occurred on connection {} ### ", ctx.channel().id(), cause);
         ctx.channel().close();
     }
 }

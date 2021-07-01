@@ -45,7 +45,7 @@ public class MessageHandlerContainer implements InitializingBean {
     public MessageHandler getMessageHandler(String type) {
         var handler = handlerMap.get(type);
         if (handler == null) {
-            throw new IllegalArgumentException(String.format("类型(%s) 找不到匹配的 MessageHandler 处理器", type));
+            throw new IllegalArgumentException(String.format("### Can not get type %s message handler ###", type));
         }
         return handler;
     }
@@ -81,11 +81,11 @@ public class MessageHandlerContainer implements InitializingBean {
                         // noinspection unchecked
                         return (Class<Message>) actualTypeArguments[0];
                     } else {
-                        throw new IllegalStateException(String.format("类型(%s) 获得不到消息类型", handler));
+                        throw new IllegalStateException(String.format("### Can not get type %s message ###", handler));
                     }
                 }
             }
         }
-        throw new IllegalStateException(String.format("类型(%s) 获得不到消息类型", handler));
+        throw new IllegalStateException(String.format("### Can not get type %s message ###", handler));
     }
 }

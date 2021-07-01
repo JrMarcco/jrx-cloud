@@ -8,19 +8,17 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
  * @author x
  * @version 1.0  2021/6/30
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class NettyClientHandlerInitializer extends ChannelInitializer<Channel> {
 
-    private static final Integer HEART_BEAT_TIME_OUT_SECONDS = 3 * 60;
+    private static final Integer HEART_BEAT_TIME_SECONDS = 10;
 
     private final MessageDispatcher messageDispatcher;
 
@@ -30,8 +28,8 @@ public class NettyClientHandlerInitializer extends ChannelInitializer<Channel> {
     protected void initChannel(Channel channel) {
         channel.pipeline()
                 // 空闲检测
-                .addLast(new IdleStateHandler(HEART_BEAT_TIME_OUT_SECONDS, 0, 0))
-                .addLast(new ReadTimeoutHandler(HEART_BEAT_TIME_OUT_SECONDS))
+                .addLast(new IdleStateHandler(HEART_BEAT_TIME_SECONDS, 0, 0))
+                .addLast(new ReadTimeoutHandler(3 * HEART_BEAT_TIME_SECONDS))
                 // 编码器
                 .addLast(new InvocationEncoder())
                 // 解码器

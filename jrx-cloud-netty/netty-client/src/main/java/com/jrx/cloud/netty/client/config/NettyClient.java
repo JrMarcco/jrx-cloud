@@ -60,12 +60,12 @@ public class NettyClient {
         // 连接服务器，并异步等待成功，即启动客户端
         bootstrap.connect().addListener((ChannelFutureListener) future -> {
             if (!future.isSuccess()) {
-                log.error("### [start] Fail to connect server {}:{} ###", serverHost, serverPort);
+                log.error("### [connect] Fail to connect server {}:{} ###", serverHost, serverPort);
                 reconnect();
                 return;
             }
             channel = future.channel();
-            log.info("### [start] Connect to server {}:{} success ###", serverHost, serverPort);
+            log.info("### [connect] Connect to server {}:{} success ###", serverHost, serverPort);
         });
     }
 

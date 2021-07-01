@@ -26,11 +26,9 @@ public class NettyServerHandlerInitializer extends ChannelInitializer<Channel> {
     private final NettyServerHandler nettyServerHandler;
 
     @Override
-    protected void initChannel(Channel ch) throws Exception {
-        // 获得 Channel 对应的 ChannelPipeline
-        var channelPipeline = ch.pipeline();
+    protected void initChannel(Channel channel) {
         // 添加 NettyServerHandler 到 ChannelPipeline 中
-        channelPipeline
+        channel.pipeline()
                 // 空闲检测
                 .addLast(new ReadTimeoutHandler(HEART_BEAT_TIME_OUT_SECONDS, TimeUnit.SECONDS))
                 // 编码器
