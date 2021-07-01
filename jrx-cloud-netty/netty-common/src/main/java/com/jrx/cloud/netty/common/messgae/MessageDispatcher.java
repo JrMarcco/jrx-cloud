@@ -26,7 +26,7 @@ public class MessageDispatcher extends SimpleChannelInboundHandler<Invocation> {
     protected void channelRead0(ChannelHandlerContext ctx, Invocation invocation) {
         // 获得 type 对应的 MessageHandler 处理器
         var messageHandler = messageHandlerContainer.getMessageHandler(invocation.getType());
-        // 获得  MessageHandler 处理器 的消息类
+        // 获得 MessageHandler 处理器 的消息类
         var messageClass = MessageHandlerContainer.getMessageClass(messageHandler);
         // 解析消息
         var message = JacksonUtils.parseObject(invocation.getMessage(), messageClass);

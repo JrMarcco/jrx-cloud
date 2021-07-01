@@ -1,13 +1,13 @@
 package com.jrx.cloud.netty.client.config;
 
 import com.jrx.cloud.netty.client.handler.NettyClientHandlerInitializer;
+import com.jrx.cloud.netty.common.codec.Invocation;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aopalliance.intercept.Invocation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

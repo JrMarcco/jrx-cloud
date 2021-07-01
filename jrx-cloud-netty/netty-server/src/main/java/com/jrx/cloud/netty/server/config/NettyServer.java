@@ -61,7 +61,7 @@ public class NettyServer {
                     .childHandler(nettyServerHandlerInitializer)
             ;
 
-            // <绑定端口，并同步等待成功，即启动服务端
+            // 绑定端口，并同步等待成功，即启动服务端
             var channelFuture = serverBootstrap.bind().sync();
             if (channelFuture.isSuccess()) {
                 channel = channelFuture.channel();

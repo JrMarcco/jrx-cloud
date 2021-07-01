@@ -1,6 +1,7 @@
 package com.jrx.cloud.netty.client;
 
 import com.jrx.cloud.netty.client.config.ConfigPackage;
+import com.jrx.cloud.netty.client.controller.ControllerPackage;
 import com.jrx.cloud.netty.client.handler.HandlerPackage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -13,7 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @Slf4j
 @SpringBootApplication
-@ComponentScan(basePackageClasses = {ConfigPackage.class, HandlerPackage.class})
+@ComponentScan(basePackageClasses = {ConfigPackage.class, ControllerPackage.class, HandlerPackage.class})
 public class NettyClientStarter {
 
     public static void main(String[] args) {

@@ -27,18 +27,15 @@ public class NettyServerHandlerInitializer extends ChannelInitializer<Channel> {
 
     @Override
     protected void initChannel(Channel channel) {
-        // 添加 NettyServerHandler 到 ChannelPipeline 中
-        channel.pipeline()
-                // 空闲检测
-                .addLast(new ReadTimeoutHandler(HEART_BEAT_TIME_OUT_SECONDS, TimeUnit.SECONDS))
-                // 编码器
-                .addLast(new InvocationEncoder())
-                // 解码器
-                .addLast(new InvocationDecoder())
-                // 消息分发器
-                .addLast(messageDispatcher)
-                // 服务端处理器
-                .addLast(nettyServerHandler)
-        ;
+        // 空闲检测
+        channel.pipeline().addLast(new ReadTimeoutHandler(HEART_BEAT_TIME_OUT_SECONDS, TimeUnit.SECONDS));
+        // 编码器
+        channel.pipeline().addLast(new InvocationEncoder());
+        // 解码器
+        channel.pipeline().addLast(new InvocationDecoder());
+        // 消息分发器
+        channel.pipeline().addLast(messageDispatcher);
+        // 服务端处理器
+        channel.pipeline().addLast(nettyServerHandler);
     }
 }

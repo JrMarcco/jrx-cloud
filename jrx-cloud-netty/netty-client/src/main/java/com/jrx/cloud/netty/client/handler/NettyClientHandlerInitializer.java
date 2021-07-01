@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class NettyClientHandlerInitializer extends ChannelInitializer<Channel> {
 
-    private static final Integer HEART_BEAT_TIME_SECONDS = 10;
+    private static final Integer HEART_BEAT_TIME_SECONDS = 60;
 
     private final MessageDispatcher messageDispatcher;
 
@@ -26,18 +26,17 @@ public class NettyClientHandlerInitializer extends ChannelInitializer<Channel> {
 
     @Override
     protected void initChannel(Channel channel) {
-        channel.pipeline()
-                // 空闲检测
-                .addLast(new IdleStateHandler(HEART_BEAT_TIME_SECONDS, 0, 0))
-                .addLast(new ReadTimeoutHandler(3 * HEART_BEAT_TIME_SECONDS))
-                // 编码器
-                .addLast(new InvocationEncoder())
-                // 解码器
-                .addLast(new InvocationDecoder())
-                // 消息分发器
-                .addLast(messageDispatcher)
-                // 客户端处理器
-                .addLast(nettyClientHandler)
-        ;
+        // 空闲检测
+        channel.pipeline().addLast(new IdleStateHandler(HEART_BEAT_TIME_SECONDS, 0, 0));
+        channel.pipeline().addLast(new ReadTimeoutHandler(3 * HEART_BEAT_TIME_SECONDS));
+        // 编码器
+        channel.pipeline().addLast(new InvocationEncoder());
+        // 解码器
+        channel.pipeline().addLast(new InvocationDecoder());
+        // 消息分发器
+        channel.pipeline().addLast(messageDispatcher);
+        // 客户端处理器
+        channel.pipeline().addLast(nettyClientHandler);
+
     }
 }
