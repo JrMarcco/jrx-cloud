@@ -47,11 +47,10 @@ public class NettyClient {
      */
     @PostConstruct
     public void start() {
-        // 创建 Bootstrap 对象，用于 Netty Client 启动
         var bootstrap = new Bootstrap();
-        bootstrap.group(eventGroup) // 设置 EventLoopGroup 对象
-                .channel(NioSocketChannel.class)  // 指定 Channel 为客户端 NioSocketChannel
-                .remoteAddress(serverHost, serverPort) // 指定连接服务器的地址
+        bootstrap.group(eventGroup)
+                .channel(NioSocketChannel.class)
+                .remoteAddress(serverHost, serverPort)
                 .option(ChannelOption.SO_KEEPALIVE, true) // TCP KeepAlive 机制，实现 TCP 层级的心跳保活功能
                 .option(ChannelOption.TCP_NODELAY, true) // 允许较小的数据包的发送，降低延迟
                 .handler(nettyClientHandlerInitializer)
