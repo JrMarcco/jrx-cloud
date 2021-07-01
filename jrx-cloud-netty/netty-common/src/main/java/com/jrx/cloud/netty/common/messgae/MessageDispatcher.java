@@ -5,7 +5,7 @@ import com.jrx.cloud.netty.common.codec.Invocation;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,12 +15,15 @@ import java.util.concurrent.Executors;
  * @version 1.0  2021/6/29
  */
 @ChannelHandler.Sharable
-@RequiredArgsConstructor
 public class MessageDispatcher extends SimpleChannelInboundHandler<Invocation> {
+
+    private final ExecutorService executor =  Executors.newFixedThreadPool(200);
 
     private final MessageHandlerContainer messageHandlerContainer;
 
-    private final ExecutorService executor =  Executors.newFixedThreadPool(200);
+    public MessageDispatcher(MessageHandlerContainer messageHandlerContainer) {
+        this.messageHandlerContainer = messageHandlerContainer;
+    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Invocation invocation) {

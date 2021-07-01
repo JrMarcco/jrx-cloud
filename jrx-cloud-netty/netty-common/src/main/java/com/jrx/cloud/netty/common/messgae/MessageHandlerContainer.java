@@ -1,6 +1,5 @@
 package com.jrx.cloud.netty.common.messgae;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -17,7 +16,6 @@ import java.util.Objects;
  * @version 1.0  2021/6/29
  */
 @Slf4j
-@RequiredArgsConstructor
 @SuppressWarnings("rawtypes")
 public class MessageHandlerContainer implements InitializingBean {
 
@@ -27,6 +25,10 @@ public class MessageHandlerContainer implements InitializingBean {
     private final Map<String, MessageHandler> handlerMap = new HashMap<>();
 
     private final ApplicationContext applicationContext;
+
+    public MessageHandlerContainer(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
     @Override
     public void afterPropertiesSet() {

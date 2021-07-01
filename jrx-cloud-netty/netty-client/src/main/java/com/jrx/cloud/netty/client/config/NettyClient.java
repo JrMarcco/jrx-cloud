@@ -3,10 +3,12 @@ package com.jrx.cloud.netty.client.config;
 import com.jrx.cloud.netty.client.handler.NettyClientHandlerInitializer;
 import com.jrx.cloud.netty.common.codec.Invocation;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.*;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,7 +23,6 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class NettyClient {
 
     private static final Integer RECONNECT_SECONDS = 20;
@@ -31,8 +32,6 @@ public class NettyClient {
     @Value("${netty.server.port:8888}")
     private Integer serverPort;
 
-    private final NettyClientHandlerInitializer nettyClientHandlerInitializer;
-
     /**
      * 线程组，用于客户端对服务端的连接、数据读写
      */
@@ -41,6 +40,12 @@ public class NettyClient {
      * Netty Client Channel
      */
     private volatile Channel channel;
+
+    private final NettyClientHandlerInitializer nettyClientHandlerInitializer;
+
+    public NettyClient(NettyClientHandlerInitializer nettyClientHandlerInitializer) {
+        this.nettyClientHandlerInitializer = nettyClientHandlerInitializer;
+    }
 
     /**
      * 启动 Netty Client
