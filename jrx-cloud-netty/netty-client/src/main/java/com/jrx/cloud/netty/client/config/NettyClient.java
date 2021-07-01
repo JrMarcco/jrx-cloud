@@ -33,13 +33,14 @@ public class NettyClient {
     private Integer serverPort;
 
     /**
-     * 线程组，用于客户端对服务端的连接、数据读写
-     */
-    private final EventLoopGroup eventGroup = new NioEventLoopGroup();
-    /**
      * Netty Client Channel
      */
     private volatile Channel channel;
+
+    /**
+     * 线程组，用于客户端对服务端的连接、数据读写
+     */
+    private final EventLoopGroup eventGroup = new NioEventLoopGroup();
 
     private final NettyClientHandlerInitializer nettyClientHandlerInitializer;
 
