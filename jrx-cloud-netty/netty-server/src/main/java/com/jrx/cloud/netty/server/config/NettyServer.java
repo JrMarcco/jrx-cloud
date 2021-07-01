@@ -65,10 +65,10 @@ public class NettyServer {
             var channelFuture = serverBootstrap.bind().sync();
             if (channelFuture.isSuccess()) {
                 channel = channelFuture.channel();
-                log.info("### [start] Netty server has started on port {} ###", port);
+                log.info("### [Start] Netty server has started on port {} ###", port);
             }
         } catch (InterruptedException e) {
-            log.info("### [start] Netty server fail to start: {} ###", e.getMessage(), e);
+            log.info("### [Start] Netty server fail to start: {} ###", e.getMessage(), e);
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }

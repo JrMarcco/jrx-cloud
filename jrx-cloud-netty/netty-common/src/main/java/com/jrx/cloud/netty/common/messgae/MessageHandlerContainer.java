@@ -33,7 +33,7 @@ public class MessageHandlerContainer implements InitializingBean {
         // 通过 ApplicationContext 获得所有 MessageHandler Bean
         applicationContext.getBeansOfType(MessageHandler.class).values()
                 .forEach(messageHandler -> handlerMap.put(messageHandler.getType(), messageHandler));
-        log.info("### [init] MessageHandler count: {} ###", handlerMap.size());
+        log.info("### [Init] MessageHandler count: {} ###", handlerMap.size());
     }
 
     /**
@@ -45,7 +45,7 @@ public class MessageHandlerContainer implements InitializingBean {
     public MessageHandler getMessageHandler(String type) {
         var handler = handlerMap.get(type);
         if (handler == null) {
-            throw new IllegalArgumentException(String.format("### Can not get type %s message handler ###", type));
+            throw new IllegalArgumentException(String.format("### [Error] Can not get type %s message handler ###", type));
         }
         return handler;
     }
@@ -81,11 +81,11 @@ public class MessageHandlerContainer implements InitializingBean {
                         // noinspection unchecked
                         return (Class<Message>) actualTypeArguments[0];
                     } else {
-                        throw new IllegalStateException(String.format("### Can not get type %s message ###", handler));
+                        throw new IllegalStateException(String.format("### [Error] Can not get type %s message ###", handler));
                     }
                 }
             }
         }
-        throw new IllegalStateException(String.format("### Can not get type %s message ###", handler));
+        throw new IllegalStateException(String.format("### [Error] Can not get type %s message ###", handler));
     }
 }

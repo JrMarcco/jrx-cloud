@@ -21,6 +21,6 @@ public class InvocationEncoder extends MessageToByteEncoder<Invocation> {
         out.writeInt(content.length);
         // 写入内容
         out.writeBytes(content);
-        log.info("### [encode] connection {} has encoded a message - {} ###", ctx.channel().id(), invocation);
+        log.info("### [Encode] connection {} has encoded a message - {} ###", ctx.channel().id(), invocation);
     }
 }

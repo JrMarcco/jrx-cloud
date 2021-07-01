@@ -28,7 +28,7 @@ public class InvocationDecoder extends ByteToMessageDecoder {
         // 读取长度
         var length = in.readInt();
         if (length < 0) {
-            throw new CorruptedFrameException("negative length: " + length);
+            throw new CorruptedFrameException(String.format("### negative length: %s ###", length));
         }
         // 如果 message 不够可读，则退回到原读取位置
         if (in.readableBytes() < length) {
@@ -41,6 +41,6 @@ public class InvocationDecoder extends ByteToMessageDecoder {
         // 解析成 Invocation
         var invocation = JacksonUtils.parseObject(content, Invocation.class);
         out.add(invocation);
-        log.info("### [decode] connection {} has decoded a message - {} ###", ctx.channel().id(), invocation);
+        log.info("### [Decode] connection {} has decoded a message - {} ###", ctx.channel().id(), invocation);
     }
 }

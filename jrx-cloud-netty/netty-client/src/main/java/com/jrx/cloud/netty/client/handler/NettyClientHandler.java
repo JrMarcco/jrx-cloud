@@ -41,7 +41,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-        log.error("### [exception] Exception has occurred on connection {} ### ", ctx.channel().id(), cause);
+        log.error("### [Exception] Exception has occurred on connection {} ### ", ctx.channel().id(), cause);
         // 断开连接
         ctx.channel().close();
     }
@@ -50,7 +50,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
     public void userEventTriggered(ChannelHandlerContext ctx, Object event) throws Exception {
         // 空闲时，向服务端发起一次心跳
         if (event instanceof IdleStateEvent) {
-            log.info("### [userEventTriggered] Send heartbeat to server ###");
+            log.info("### [IdleStateEvent] Send heartbeat to server ###");
             ctx.writeAndFlush(Invocation.builder().type(HeartbeatReq.TYPE).message(new HeartbeatReq().toString()).build())
                     .addListener(ChannelFutureListener.CLOSE_ON_FAILURE)
             ;

@@ -16,7 +16,7 @@ public class HeartbeatResponseHandler implements MessageHandler<HeartbeatRsp> {
 
     @Override
     public void execute(Channel channel, HeartbeatRsp message) {
-        log.info("### [execute] Receive heartbeat response from connection {} ###", channel.id());
+        log.info("### [Execute] Receive heartbeat response from connection {} ###", channel.id());
     }
 
     @Override

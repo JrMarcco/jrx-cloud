@@ -41,7 +41,7 @@ public class NettyChannelManager {
      */
     public void add(Channel channel) {
         channels.put(channel.id(), channel);
-        log.info("### [connect] add connection {} ###", channel.id());
+        log.info("### [Connect] Add connection {} ###", channel.id());
     }
 
     /**
@@ -53,13 +53,14 @@ public class NettyChannelManager {
     public void addUser(Channel channel, String user) {
         var existChannel = channels.get(channel.id());
         if (existChannel == null) {
-            log.error("### [add-user] connection {} is not exist ###", channel.id());
+            log.error("### [Connect] Connection {} is not exist ###", channel.id());
             return;
         }
         // 设置属性
         channel.attr(CHANNEL_ATTR_KEY_USER).set(user);
         // 添加到 userChannels
         userChannels.put(user, channel);
+        log.info("### [Connect] Add user {} from connection {} ###", user, channel.id());
     }
 
     /**
@@ -74,7 +75,7 @@ public class NettyChannelManager {
         if (channel.hasAttr(CHANNEL_ATTR_KEY_USER)) {
             userChannels.remove(channel.attr(CHANNEL_ATTR_KEY_USER).get());
         }
-        log.info("### [disconnect] remove connection {} ###", channel.id());
+        log.info("### [Disconnect] Remove connection {} ###", channel.id());
     }
 
 
@@ -88,11 +89,11 @@ public class NettyChannelManager {
         // 获得用户对应的 Channel
         var channel = userChannels.get(user);
         if (channel == null) {
-            log.error("### [send] connection is not exist ###");
+            log.error("### [Send] Connection is not exist ###");
             return;
         }
         if (!channel.isActive()) {
-            log.error("### [send] connection {} is not active ###", channel.id());
+            log.error("### [Send] Connection {} is not active ###", channel.id());
             return;
         }
         // 发送消息
@@ -107,7 +108,7 @@ public class NettyChannelManager {
     public void sendAll(Invocation invocation) {
         channels.values().forEach(channel -> {
             if (!channel.isActive()) {
-                log.error("### [send] connection {} is not active ###", channel.id());
+                log.error("### [Send] Connection {} is not active ###", channel.id());
                 return;
             }
             // 发送消息

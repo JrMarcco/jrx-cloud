@@ -18,7 +18,7 @@ public class HeartbeatRequestHandler implements MessageHandler<HeartbeatReq> {
 
     @Override
     public void execute(Channel channel, HeartbeatReq message) {
-        log.info("### [execute] Receive heartbeat request from connection {} ### ###", channel.id());
+        log.info("### [Execute] Receive heartbeat request from connection {} ### ###", channel.id());
         channel.writeAndFlush(Invocation.builder().type(HeartbeatRsp.TYPE).message(new HeartbeatRsp().toString()).build());
     }
 

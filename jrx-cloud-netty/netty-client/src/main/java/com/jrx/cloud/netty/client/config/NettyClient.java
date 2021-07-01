@@ -60,12 +60,12 @@ public class NettyClient {
         // 连接服务器，并异步等待成功，即启动客户端
         bootstrap.connect().addListener((ChannelFutureListener) future -> {
             if (!future.isSuccess()) {
-                log.error("### [connect] Fail to connect server {}:{} ###", serverHost, serverPort);
+                log.error("### [Connect] Fail to connect server {}:{} ###", serverHost, serverPort);
                 reconnect();
                 return;
             }
             channel = future.channel();
-            log.info("### [connect] Connect to server {}:{} success ###", serverHost, serverPort);
+            log.info("### [Connect] Connect to server {}:{} success ###", serverHost, serverPort);
         });
     }
 
@@ -74,10 +74,10 @@ public class NettyClient {
      */
     public void reconnect() {
         eventGroup.schedule(() -> {
-            log.info("### [reconnect] Start to reconnect ###");
+            log.info("### [Reconnect] Start to reconnect ###");
             start();
         }, RECONNECT_SECONDS, TimeUnit.SECONDS);
-        log.info("### [reconnect] Start to reconnect after {} seconds ###", RECONNECT_SECONDS);
+        log.info("### [Reconnect] Start to reconnect after {} seconds ###", RECONNECT_SECONDS);
     }
 
     /**
@@ -98,11 +98,11 @@ public class NettyClient {
      */
     public void send(Invocation invocation) {
         if (channel == null) {
-            log.error("### [send] connection is not exist ###");
+            log.error("### [Send] connection is not exist ###");
             return;
         }
         if (!channel.isActive()) {
-            log.error("### [send] connection {} is not active ###", channel.id());
+            log.error("### [Send] connection {} is not active ###", channel.id());
             return;
         }
         // 发送消息
