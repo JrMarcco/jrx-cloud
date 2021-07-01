@@ -98,14 +98,15 @@ public class NettyClient {
      */
     public void send(Invocation invocation) {
         if (channel == null) {
-            log.error("### [Send] connection is not exist ###");
+            log.error("### [Send] Connection is not exist ###");
             return;
         }
         if (!channel.isActive()) {
-            log.error("### [Send] connection {} is not active ###", channel.id());
+            log.error("### [Send] Connection {} is not active ###", channel.id());
             return;
         }
         // 发送消息
         channel.writeAndFlush(invocation);
+        log.info("### [Send] Send message {} to connection {} ###", invocation.toString(), channel.id());
     }
 }
