@@ -53,7 +53,7 @@ public class MessageHandlerContainer implements InitializingBean {
      * @param handler 处理器
      * @return 消息类
      */
-    public static Class<? extends Message> getMessageClass(MessageHandler handler) {
+    public Class<? extends Message> getMessageClass(MessageHandler handler) {
         // 获得 Bean 对应的 Class 类名。因为有可能被 AOP 代理过。
         var targetClass = AopProxyUtils.ultimateTargetClass(handler);
         // 获得接口的 Type 数组
