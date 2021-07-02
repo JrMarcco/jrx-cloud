@@ -23,10 +23,7 @@ public class TestController {
     @GetMapping("/mockAuth")
     public BaseRsp<Void> mockAuth() {
         nettyClient.send(
-                Invocation.builder()
-                        .type(AuthReq.TYPE)
-                        .message(AuthReq.builder().accessToken("TestToken").build().toString())
-                        .build()
+                Invocation.instanceOf(AuthReq.TYPE, AuthReq.builder().accessToken("TestToken").build())
         );
 
         return BaseRsp.success();

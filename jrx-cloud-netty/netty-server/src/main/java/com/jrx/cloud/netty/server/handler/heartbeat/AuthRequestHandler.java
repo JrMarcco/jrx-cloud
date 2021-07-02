@@ -19,7 +19,7 @@ public class AuthRequestHandler implements MessageHandler<AuthReq> {
     public void execute(Channel channel, AuthReq message) {
         log.info("### [Execute] Receive {} from connection {} ### ###", message.toString(), channel.id());
 
-        channel.writeAndFlush(new Invocation(AuthRsp.TYPE, new AuthRsp().toString()));
+        channel.writeAndFlush(Invocation.instanceOf(AuthRsp.TYPE, new AuthRsp()));
     }
 
     @Override

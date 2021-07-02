@@ -12,6 +12,10 @@ public class HeartbeatReq implements Message {
 
     public static final String TYPE = "HEARTBEAT_REQUEST";
 
+    public static HeartbeatReq instanceOf() {
+        return new HeartbeatReq();
+    }
+
     @Override
     public String toString() {
         return "HeartbeatReq: {}";

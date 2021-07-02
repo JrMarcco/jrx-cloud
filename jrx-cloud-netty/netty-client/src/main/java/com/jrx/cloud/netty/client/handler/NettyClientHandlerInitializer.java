@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class NettyClientHandlerInitializer extends ChannelInitializer<Channel> {
 
-    private static final Integer HEART_BEAT_TIME_SECONDS = 60;
+    private static final Integer HEART_BEAT_TIME_SECONDS = 5;
 
     private final MessageDispatcher messageDispatcher;
     private final NettyClientHandler nettyClientHandler;

@@ -1,0 +1,38 @@
+server:
+  port: 18520
+netty:
+  server:
+    host: 127.0.0.1
+    port: 18511
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: jrx-cloud-netty-client
+#  cloud:
+#    config:
+#      enabled: true
+#      discovery:
+#        serviceId: jrx-cloud-config
+#        enabled: true
+#      name: websocket-api, rabbitmq
+#      label: master
+#      profile: ${spring.profiles.active}
+
+logging:
+  config: classpath:log4j2.xml
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+#    import: optional:configserver:http://127.0.0.1:18100/
+#  cloud:
+#    consul:
+#      host: 127.0.0.1
+#      port: 8500
+#      discovery:
+#        service-name: ${spring.application.name}
+#        health-check-path: /actuator/health

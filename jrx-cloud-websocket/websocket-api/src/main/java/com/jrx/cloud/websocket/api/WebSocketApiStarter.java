@@ -1,6 +1,5 @@
 package com.jrx.cloud.websocket.api;
 
-import com.jrx.cloud.common.config.context.ApplicationContextListener;
 import com.jrx.cloud.common.config.global.JacksonConfig;
 import com.jrx.cloud.websocket.api.config.ConfigPackage;
 import com.jrx.cloud.websocket.api.container.ContainerPackage;

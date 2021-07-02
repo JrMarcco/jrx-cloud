@@ -10,6 +10,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -27,9 +28,9 @@ public class NettyClient {
 
     private static final Integer RECONNECT_SECONDS = 20;
 
-    @Value("${netty.server.host:127.0.0.1}")
+    @Value("${netty.server.host}")
     private String serverHost;
-    @Value("${netty.server.port:8888}")
+    @Value("${netty.server.port}")
     private Integer serverPort;
 
     /**

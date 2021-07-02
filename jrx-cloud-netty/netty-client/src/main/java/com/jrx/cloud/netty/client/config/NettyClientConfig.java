@@ -12,18 +12,15 @@ import org.springframework.context.annotation.Configuration;
  * @version 1.0  2021/6/30
  */
 @Configuration
-@RequiredArgsConstructor
 public class NettyClientConfig {
-
-    private final ApplicationContext applicationContext;
 
     @Bean
     public MessageHandlerContainer messageHandlerContainer() {
-        return new MessageHandlerContainer(applicationContext);
+        return new MessageHandlerContainer();
     }
 
     @Bean
-    public MessageDispatcher messageDispatcher(MessageHandlerContainer messageHandlerContainer) {
-        return new MessageDispatcher(messageHandlerContainer);
+    public MessageDispatcher messageDispatcher() {
+        return new MessageDispatcher();
     }
 }

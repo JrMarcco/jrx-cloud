@@ -4,3 +4,5 @@
 18300 :: auth-server
 18400 :: user-api
 18500 :: websocket-api
+18510 :: netty-server
+18520 :: netty-client

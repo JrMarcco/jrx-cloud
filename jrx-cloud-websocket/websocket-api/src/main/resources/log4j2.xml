@@ -4,7 +4,7 @@
 
     <Properties>
         <property name="DIR" value="./logs"/>
-        <property name="FILENAME" value="websocket-api.log"/>
+        <property name="FILENAME" value="websocket-api"/>
 
         <Property name="LOG_EXCEPTION_CONVERSION_WORD">%xwEx</Property>
         <Property name="LOG_LEVEL_PATTERN">%5p</Property>

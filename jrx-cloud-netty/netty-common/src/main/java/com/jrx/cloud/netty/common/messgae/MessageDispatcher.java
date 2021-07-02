@@ -19,11 +19,8 @@ public class MessageDispatcher extends SimpleChannelInboundHandler<Invocation> {
 
     private final ExecutorService executor =  Executors.newFixedThreadPool(200);
 
-    private final MessageHandlerContainer messageHandlerContainer;
-
-    public MessageDispatcher(MessageHandlerContainer messageHandlerContainer) {
-        this.messageHandlerContainer = messageHandlerContainer;
-    }
+    @Autowired
+    private MessageHandlerContainer messageHandlerContainer;
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Invocation invocation) {

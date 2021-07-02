@@ -15,6 +15,10 @@ public class HeartbeatRsp implements Message {
      */
     public static final String TYPE = "HEARTBEAT_RESPONSE";
 
+    public static HeartbeatRsp instanceOf() {
+        return new HeartbeatRsp();
+    }
+
     @Override
     public String toString() {
         return "HeartbeatRsp: {}";

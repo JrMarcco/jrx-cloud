@@ -3,6 +3,7 @@ package com.jrx.cloud.netty.common.messgae;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import java.lang.reflect.ParameterizedType;
@@ -19,16 +20,10 @@ import java.util.Objects;
 @SuppressWarnings("rawtypes")
 public class MessageHandlerContainer implements InitializingBean {
 
-    /**
-     * 消息类型与 MessageHandler 的映射
-     */
+    @Autowired
+    private ApplicationContext applicationContext;
+
     private final Map<String, MessageHandler> handlerMap = new HashMap<>();
-
-    private final ApplicationContext applicationContext;
-
-    public MessageHandlerContainer(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
 
     @Override
     public void afterPropertiesSet() {

@@ -1,7 +1,7 @@
 package com.jrx.cloud.netty.common.codec;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.jrx.cloud.common.util.JacksonUtils;
+import com.jrx.cloud.netty.common.messgae.Message;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,9 +15,7 @@ import java.io.Serializable;
  * @version 1.0  2021/6/29
  */
 @Data
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class Invocation implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -25,14 +23,13 @@ public class Invocation implements Serializable {
     private String type;
     private String message;
 
-    public Invocation setType(String type) {
+    private Invocation(String type, Message message) {
         this.type = type;
-        return this;
+        this.message = JacksonUtils.toJsonString(message);
     }
 
-    public Invocation setMessage(String message) {
-        this.message = message;
-        return this;
+    public static Invocation instanceOf(String type, Message message) {
+        return new Invocation(type, message);
     }
 
     public String toString() {
