@@ -15,11 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class InvocationEncoder extends MessageToByteEncoder<Invocation> {
     @Override
-    protected void encode(ChannelHandlerContext ctx, Invocation invocation, ByteBuf out) throws Exception {
-        var content = JacksonUtils.toJSonBytes(invocation);
-        // 写入 length
+    protected void encode(ChannelHandlerContext ctx, Invocation invocation, ByteBuf out) {
+        var content = JacksonUtils.toJsonBytes(invocation);
         out.writeInt(content.length);
-        // 写入内容
         out.writeBytes(content);
         log.info("### [Encode] connection {} has encoded a message - {} ###", ctx.channel().id(), invocation);
     }

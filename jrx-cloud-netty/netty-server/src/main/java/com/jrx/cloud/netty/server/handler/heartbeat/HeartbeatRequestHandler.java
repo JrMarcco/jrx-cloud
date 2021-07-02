@@ -24,6 +24,6 @@ public class HeartbeatRequestHandler implements MessageHandler<HeartbeatReq> {
 
     @Override
     public String getType() {
-        return HeartbeatRsp.TYPE;
+        return HeartbeatReq.TYPE;
     }
 }

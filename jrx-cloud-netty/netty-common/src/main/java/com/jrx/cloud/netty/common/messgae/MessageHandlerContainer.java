@@ -66,7 +66,7 @@ public class MessageHandlerContainer implements InitializingBean {
         }
 
         // 遍历 interfaces 数组
-        for (Type type : interfaces) {
+        for (var type : interfaces) {
             // 要求 type 是泛型参数
             if (type instanceof ParameterizedType) {
                 var parameterizedType = (ParameterizedType) type;

@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 public class InvocationDecoder extends ByteToMessageDecoder {
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
         // 标记当前读取位置
         in.markReaderIndex();
         // 判断是否能够读取 length 长度

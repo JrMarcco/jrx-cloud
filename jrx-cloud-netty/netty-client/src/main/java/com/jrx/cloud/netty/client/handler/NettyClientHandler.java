@@ -4,10 +4,7 @@ import com.jrx.cloud.common.util.JacksonUtils;
 import com.jrx.cloud.netty.client.config.NettyClient;
 import com.jrx.cloud.netty.common.codec.Invocation;
 import com.jrx.cloud.netty.common.messgae.heartbeat.HeartbeatReq;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.*;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +49,13 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
         if (event instanceof IdleStateEvent) {
             log.info("### [IdleStateEvent] Send heartbeat to server ###");
             ctx.writeAndFlush(Invocation.instanceOf(HeartbeatReq.TYPE, HeartbeatReq.instanceOf()))
-                    .addListener(ChannelFutureListener.CLOSE_ON_FAILURE)
+                    .addListener((ChannelFutureListener) future -> {
+                        if (!future.isSuccess()) {
+                            log.info("### [IdleStateEvent] Fail to send heartbeat to server ###");
+                            return;
+                        }
+                        log.info("### [IdleStateEvent] Send heartbeat to server success ###");
+                    })
             ;
         } else {
             super.userEventTriggered(ctx, event);

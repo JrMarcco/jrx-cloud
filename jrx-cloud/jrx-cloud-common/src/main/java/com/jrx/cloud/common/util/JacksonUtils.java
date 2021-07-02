@@ -50,19 +50,16 @@ public class JacksonUtils {
         } catch (JsonProcessingException e) {
             log.error(e.getMessage(), e);
         }
-        return null;
+        return "";
     }
 
-    public static <T> byte[] toJSonBytes(T object) {
-        return toJSonBytes(StandardCharsets.UTF_8);
-    }
-
-    public static <T> byte[] toJSonBytes(T object, Charset charset) {
-        var jsonString = toJsonString(object);
-        if (StringUtils.hasLength(jsonString)) {
-            return jsonString.getBytes(charset);
+    public static <T> byte[] toJsonBytes(T object) {
+        try {
+            return OBJECT_MAPPER.writeValueAsBytes(object);
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage(), e);
         }
-        return null;
+        return new byte[] {};
     }
 
     public static <T> T parseObject(String json, Class<T> objectClass) {
