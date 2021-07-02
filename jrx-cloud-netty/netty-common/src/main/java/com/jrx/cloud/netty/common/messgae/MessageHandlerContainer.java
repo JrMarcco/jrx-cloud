@@ -20,10 +20,10 @@ import java.util.Objects;
 @SuppressWarnings("rawtypes")
 public class MessageHandlerContainer implements InitializingBean {
 
+    private final Map<String, MessageHandler> handlerMap = new HashMap<>();
+
     @Autowired
     private ApplicationContext applicationContext;
-
-    private final Map<String, MessageHandler> handlerMap = new HashMap<>();
 
     @Override
     public void afterPropertiesSet() {
