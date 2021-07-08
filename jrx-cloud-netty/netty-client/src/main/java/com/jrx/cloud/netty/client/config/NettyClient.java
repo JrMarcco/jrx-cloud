@@ -9,6 +9,7 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class NettyClient {
 
     private static final Integer RECONNECT_SECONDS = 20;
@@ -43,10 +45,6 @@ public class NettyClient {
     private final EventLoopGroup eventGroup = new NioEventLoopGroup();
 
     private final NettyClientHandlerInitializer nettyClientHandlerInitializer;
-
-    public NettyClient(NettyClientHandlerInitializer nettyClientHandlerInitializer) {
-        this.nettyClientHandlerInitializer = nettyClientHandlerInitializer;
-    }
 
     /**
      * 启动 Netty Client

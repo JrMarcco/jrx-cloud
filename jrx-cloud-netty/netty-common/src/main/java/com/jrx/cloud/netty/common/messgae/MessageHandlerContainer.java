@@ -1,13 +1,12 @@
 package com.jrx.cloud.netty.common.messgae;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.aop.framework.AopProxyUtils;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -17,13 +16,13 @@ import java.util.Objects;
  * @version 1.0  2021/6/29
  */
 @Slf4j
+@RequiredArgsConstructor
 @SuppressWarnings("rawtypes")
 public class MessageHandlerContainer implements InitializingBean {
 
     private final Map<String, MessageHandler> handlerMap = new HashMap<>();
 
-    @Autowired
-    private ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
     @Override
     public void afterPropertiesSet() {
