@@ -6,8 +6,7 @@ import org.springframework.core.io.ClassPathResource;
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.security.KeyFactory;
+import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
@@ -83,12 +82,20 @@ public class RsaUtils {
         }
     }
 
-    public static String getPublicKey() {
-        return Base64.getEncoder().encodeToString(keyPair.get(PUBLIC_KEY).getEncoded());
+    public static PublicKey getPublicKey() {
+        return (PublicKey) keyPair.get(PUBLIC_KEY);
     }
 
-    public static String getPrivateKey() {
-        return Base64.getEncoder().encodeToString(keyPair.get(PRIVATE_KEY).getEncoded());
+    public static PrivateKey getPrivateKey() {
+        return (PrivateKey) keyPair.get(PRIVATE_KEY);
+    }
+
+    public static String getEncodedPublicKey() {
+        return Base64.getEncoder().encodeToString(getPublicKey().getEncoded());
+    }
+
+    public static String getEncodedPrivateKey() {
+        return Base64.getEncoder().encodeToString(getPrivateKey().getEncoded());
     }
 
     /**
@@ -99,7 +106,7 @@ public class RsaUtils {
     public static String encryptByPrivateKey(String content) {
         try {
             var keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-            var privateK = keyFactory.generatePrivate(new PKCS8EncodedKeySpec(Base64.getDecoder().decode(getPrivateKey())));
+            var privateK = keyFactory.generatePrivate(new PKCS8EncodedKeySpec(Base64.getDecoder().decode(getEncodedPrivateKey())));
             var cipher = Cipher.getInstance(keyFactory.getAlgorithm());
             cipher.init(Cipher.ENCRYPT_MODE, privateK);
 
@@ -112,11 +119,10 @@ public class RsaUtils {
                 }
                 return Base64.getEncoder().encodeToString(out.toByteArray());
             }
-
         } catch (Exception e) {
             log.error("### [Encrypt] Fail to encrypt content by ras private key: {} ###", e.getMessage(), e);
-            return null;
         }
+        return null;
     }
 
     /**
@@ -125,7 +131,7 @@ public class RsaUtils {
     public static String decryptByPublicKey(String encryptedData) {
         try {
             var keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-            var publicK = keyFactory.generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(getPublicKey())));
+            var publicK = keyFactory.generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(getEncodedPublicKey())));
             var cipher = Cipher.getInstance(keyFactory.getAlgorithm());
             cipher.init(Cipher.DECRYPT_MODE, publicK);
 
@@ -139,7 +145,45 @@ public class RsaUtils {
             }
         } catch (Exception e) {
             log.error("### [Decrypt] Fail to decrypt data by ras public key: {} ###", e.getMessage(), e);
-            return null;
+        }
+        return null;
+    }
+
+    /**
+     * 私钥签名
+     */
+    public static String signByPrivateKey(String encryptData) {
+        try {
+            var signature = Signature.getInstance(KEY_ALGORITHM);
+            signature.initSign(getPrivateKey());
+            signature.update(encryptData.getBytes(StandardCharsets.UTF_8));
+
+            return Base64.getEncoder().encodeToString(signature.sign());
+        } catch (Exception e) {
+            log.error("### [Sign] Fail to sign by ras private key: {} ###", e.getMessage(), e);
+        }
+        return null;
+    }
+
+    /**
+     * 公钥验签
+     */
+    public static boolean verifyByPublicKey(String encryptedSign, String sign) throws Exception {
+        try {
+            var signature = Signature.getInstance(KEY_ALGORITHM);
+            signature.initVerify(getPublicKey());
+            signature.update(encryptedSign.getBytes());
+
+            return signature.verify(Base64.getDecoder().decode(sign));
+        } catch (NoSuchAlgorithmException e) {
+            log.error("### [Verify] No such algorithm called {} : {} ###", KEY_ALGORITHM, e.getMessage(), e);
+            throw new Exception(String.format("No such algorithm called %s", KEY_ALGORITHM));
+        } catch (InvalidKeyException e) {
+            log.error("### [Verify] Invalidate public key ###");
+            throw new Exception("Invalidate public key.");
+        } catch (SignatureException e) {
+            log.error("### [Verify] Fail to verify sign ###");
+            throw new Exception("Fail to verify sign.");
         }
     }
 }
