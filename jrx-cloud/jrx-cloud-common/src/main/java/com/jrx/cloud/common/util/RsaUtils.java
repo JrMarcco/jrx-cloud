@@ -3,7 +3,10 @@ package com.jrx.cloud.common.util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
@@ -98,6 +101,52 @@ public class RsaUtils {
         return Base64.getEncoder().encodeToString(getPrivateKey().getEncoded());
     }
 
+    public static Cipher getCipher(KeyFactory keyFactory, Key key) throws Exception {
+        var cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        return cipher;
+    }
+
+    private static String doEncrypt(String content, Cipher cipher) throws Exception {
+        var data = content.getBytes(StandardCharsets.UTF_8);
+
+        try (var out = new ByteArrayOutputStream()) {
+            for (var i = 0; i < data.length; i += MAX_ENCRYPT_BLOCK) {
+                var doFinal = cipher.doFinal(Arrays.copyOfRange(data, i, i + MAX_ENCRYPT_BLOCK));
+                out.write(doFinal, 0, doFinal.length);
+            }
+            return Base64.getEncoder().encodeToString(out.toByteArray());
+        }
+    }
+
+    private static String doDecrypt(String encryptedData, Cipher cipher) throws Exception {
+        var data = Base64.getDecoder().decode(encryptedData);
+        try (var out = new ByteArrayOutputStream()) {
+            for (var i = 0; i < data.length; i += MAX_DECRYPT_BLOCK) {
+                var doFinal = cipher.doFinal(Arrays.copyOfRange(data, i, i + MAX_DECRYPT_BLOCK));
+                out.write(doFinal, 0, doFinal.length);
+            }
+            return out.toString();
+        }
+    }
+
+    /**
+     * 通过公钥加密
+     */
+    public static String encryptByPublicKey(String content) {
+        try {
+            var keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+
+            return doEncrypt(
+                    content,
+                    getCipher(keyFactory, keyFactory.generatePrivate(new X509EncodedKeySpec(Base64.getDecoder().decode(getEncodedPublicKey()))))
+            );
+        } catch (Exception e) {
+            log.error("### [Encrypt] Fail to encrypt content by ras private key: {} ###", e.getMessage(), e);
+        }
+        return null;
+    }
+
     /**
      * 通过秘钥加密数据。
      *
@@ -106,24 +155,17 @@ public class RsaUtils {
     public static String encryptByPrivateKey(String content) {
         try {
             var keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-            var privateK = keyFactory.generatePrivate(new PKCS8EncodedKeySpec(Base64.getDecoder().decode(getEncodedPrivateKey())));
-            var cipher = Cipher.getInstance(keyFactory.getAlgorithm());
-            cipher.init(Cipher.ENCRYPT_MODE, privateK);
 
-            var data = content.getBytes(StandardCharsets.UTF_8);
-
-            try (var out = new ByteArrayOutputStream()) {
-                for (var i = 0; i < data.length; i += MAX_ENCRYPT_BLOCK) {
-                    var doFinal = cipher.doFinal(Arrays.copyOfRange(data, i, i + MAX_ENCRYPT_BLOCK));
-                    out.write(doFinal, 0, doFinal.length);
-                }
-                return Base64.getEncoder().encodeToString(out.toByteArray());
-            }
+            return doEncrypt(
+                    content,
+                    getCipher(keyFactory, keyFactory.generatePrivate(new PKCS8EncodedKeySpec(Base64.getDecoder().decode(getEncodedPrivateKey()))))
+            );
         } catch (Exception e) {
             log.error("### [Encrypt] Fail to encrypt content by ras private key: {} ###", e.getMessage(), e);
         }
         return null;
     }
+
 
     /**
      * 通过公钥解密
@@ -131,18 +173,28 @@ public class RsaUtils {
     public static String decryptByPublicKey(String encryptedData) {
         try {
             var keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-            var publicK = keyFactory.generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(getEncodedPublicKey())));
-            var cipher = Cipher.getInstance(keyFactory.getAlgorithm());
-            cipher.init(Cipher.DECRYPT_MODE, publicK);
 
-            var data = Base64.getDecoder().decode(encryptedData);
-            try (var out = new ByteArrayOutputStream()) {
-                for (var i = 0; i < data.length; i += MAX_DECRYPT_BLOCK) {
-                    var doFinal = cipher.doFinal(Arrays.copyOfRange(data, i, i + MAX_DECRYPT_BLOCK));
-                    out.write(doFinal, 0, doFinal.length);
-                }
-                return out.toString();
-            }
+            return doDecrypt(
+                    encryptedData,
+                    getCipher(keyFactory, keyFactory.generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(getEncodedPublicKey()))))
+            );
+        } catch (Exception e) {
+            log.error("### [Decrypt] Fail to decrypt data by ras public key: {} ###", e.getMessage(), e);
+        }
+        return null;
+    }
+
+    /**
+     * 通过秘钥解密
+     */
+    public static String decryptByPrivateKey(String encryptedData) {
+        try {
+            var keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+
+            return doDecrypt(
+                    encryptedData,
+                    getCipher(keyFactory, keyFactory.generatePrivate(new PKCS8EncodedKeySpec(Base64.getDecoder().decode(getEncodedPrivateKey()))))
+            );
         } catch (Exception e) {
             log.error("### [Decrypt] Fail to decrypt data by ras public key: {} ###", e.getMessage(), e);
         }
