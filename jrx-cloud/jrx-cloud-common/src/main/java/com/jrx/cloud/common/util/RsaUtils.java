@@ -85,19 +85,19 @@ public class RsaUtils {
         }
     }
 
-    public static PublicKey getPublicKey() {
+    private static PublicKey getPublicKey() {
         return (PublicKey) keyPair.get(PUBLIC_KEY);
     }
 
-    public static PrivateKey getPrivateKey() {
+    private static PrivateKey getPrivateKey() {
         return (PrivateKey) keyPair.get(PRIVATE_KEY);
     }
 
-    public static String getEncodedPublicKey() {
+    private static String getEncodedPublicKey() {
         return Base64.getEncoder().encodeToString(getPublicKey().getEncoded());
     }
 
-    public static String getEncodedPrivateKey() {
+    private static String getEncodedPrivateKey() {
         return Base64.getEncoder().encodeToString(getPrivateKey().getEncoded());
     }
 
