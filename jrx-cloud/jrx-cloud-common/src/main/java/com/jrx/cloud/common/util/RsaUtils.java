@@ -131,23 +131,6 @@ public class RsaUtils {
     }
 
     /**
-     * 通过公钥加密
-     */
-    public static String encryptByPublicKey(String content) {
-        try {
-            var keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-
-            return doEncrypt(
-                    content,
-                    getCipher(keyFactory, keyFactory.generatePrivate(new X509EncodedKeySpec(Base64.getDecoder().decode(getEncodedPublicKey()))))
-            );
-        } catch (Exception e) {
-            log.error("### [Encrypt] Fail to encrypt content by ras private key: {} ###", e.getMessage(), e);
-        }
-        return null;
-    }
-
-    /**
      * 通过秘钥加密数据。
      *
      * @param content 加密内容
@@ -166,7 +149,6 @@ public class RsaUtils {
         return null;
     }
 
-
     /**
      * 通过公钥解密
      */
@@ -177,23 +159,6 @@ public class RsaUtils {
             return doDecrypt(
                     encryptedData,
                     getCipher(keyFactory, keyFactory.generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(getEncodedPublicKey()))))
-            );
-        } catch (Exception e) {
-            log.error("### [Decrypt] Fail to decrypt data by ras public key: {} ###", e.getMessage(), e);
-        }
-        return null;
-    }
-
-    /**
-     * 通过秘钥解密
-     */
-    public static String decryptByPrivateKey(String encryptedData) {
-        try {
-            var keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-
-            return doDecrypt(
-                    encryptedData,
-                    getCipher(keyFactory, keyFactory.generatePrivate(new PKCS8EncodedKeySpec(Base64.getDecoder().decode(getEncodedPrivateKey()))))
             );
         } catch (Exception e) {
             log.error("### [Decrypt] Fail to decrypt data by ras public key: {} ###", e.getMessage(), e);
