@@ -101,7 +101,7 @@ public class RsaUtils {
         return Base64.getEncoder().encodeToString(getPrivateKey().getEncoded());
     }
 
-    public static Cipher getCipher(KeyFactory keyFactory, Key key) throws Exception {
+    private static Cipher getCipher(KeyFactory keyFactory, Key key) throws Exception {
         var cipher = Cipher.getInstance(keyFactory.getAlgorithm());
         cipher.init(Cipher.ENCRYPT_MODE, key);
         return cipher;
