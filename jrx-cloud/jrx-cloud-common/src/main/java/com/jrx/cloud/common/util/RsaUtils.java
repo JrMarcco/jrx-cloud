@@ -42,7 +42,7 @@ public class RsaUtils {
     private static final String PRIVATE_KEY = "RSAPrivateKey";
 
     /**
-     * RSA最大加密明文大小
+     * RSA最大加密明文大小（秘钥位数为1024时最大解密大小117，位数为2048时最大解密大小245）
      */
     private static final int MAX_ENCRYPT_BLOCK = 117;
 
