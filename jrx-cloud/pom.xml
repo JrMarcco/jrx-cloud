@@ -16,7 +16,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>15</java.version>
+        <java.version>16</java.version>
 
         <version.spring>5.3.8</version.spring>
         <version.spring.boot>2.5.1</version.spring.boot>
