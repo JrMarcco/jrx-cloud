@@ -77,6 +77,9 @@ public class ShellExecUtils {
             }
         } catch (IOException | InterruptedException e) {
             log.error("### Execute shell command error，command:{} ###", command, e);
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
             throw e;
         }
     }

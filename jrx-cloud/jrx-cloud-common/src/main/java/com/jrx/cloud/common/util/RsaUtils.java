@@ -51,6 +51,8 @@ public class RsaUtils {
      */
     private static final int MAX_DECRYPT_BLOCK = 128;
 
+    private static final String BLANK = "\\u0000";
+
 
     static {
         loadKeyPair();
@@ -115,7 +117,7 @@ public class RsaUtils {
                 var doFinal = cipher.doFinal(Arrays.copyOfRange(data, i, i + MAX_ENCRYPT_BLOCK));
                 out.write(doFinal, 0, doFinal.length);
             }
-            return Base64.getEncoder().encodeToString(out.toByteArray());
+            return Base64.getEncoder().encodeToString(out.toByteArray()).replaceAll(BLANK, "");
         }
     }
 
@@ -126,7 +128,7 @@ public class RsaUtils {
                 var doFinal = cipher.doFinal(Arrays.copyOfRange(data, i, i + MAX_DECRYPT_BLOCK));
                 out.write(doFinal, 0, doFinal.length);
             }
-            return out.toString();
+            return out.toString().replaceAll(BLANK, "");
         }
     }
 
