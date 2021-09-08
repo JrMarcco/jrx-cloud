@@ -57,7 +57,7 @@ public class SnowflakeUtils {
         }
 
         lastTimeStamp = now;
-        return ((now - START_TIME) << TIME_LEFT_BIT) | (DATA_ID << DATA_LEFT_BIT) | (WORK_ID << WORK_LEFT_BIT) | LAST_SEQ;
+        return ((now - START_TIME) << TIME_LEFT_BIT) | (DATA_ID << DATA_LEFT_BIT) | (WORK_ID << WORK_LEFT_BIT) | lastSeq;
     }
 
     // ----------------------------------------< Private Method >----------------------------------------
