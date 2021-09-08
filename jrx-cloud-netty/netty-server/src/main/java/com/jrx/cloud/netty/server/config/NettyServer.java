@@ -69,6 +69,7 @@ public class NettyServer {
             log.info("### [Start] Netty server fail to start: {} ###", e.getMessage(), e);
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
+            Thread.currentThread().interrupt();
         }
     }
 

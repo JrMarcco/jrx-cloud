@@ -64,11 +64,11 @@ public class WebSocket {
                 channel = channelFuture.channel();
                 log.info("### WebSocket Server Has Already Started On {} ###", port);
             }
-
         } catch (InterruptedException e) {
             log.info("### WebSocket Server Fail To Start: {} ###", e.getMessage(), e);
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
+            Thread.currentThread().interrupt();
         }
     }
 
