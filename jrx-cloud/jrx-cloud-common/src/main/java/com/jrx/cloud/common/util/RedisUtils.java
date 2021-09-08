@@ -16,6 +16,9 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class RedisUtils {
 
+    private RedisUtils() {
+    }
+
     public static <T> T getStringValue(StringRedisTemplate rt, Class<T> cls, String key) {
         try {
             return Optional.ofNullable(rt.opsForValue().get(key))

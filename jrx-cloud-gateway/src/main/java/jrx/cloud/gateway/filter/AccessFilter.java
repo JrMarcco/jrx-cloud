@@ -72,7 +72,7 @@ public class AccessFilter implements GlobalFilter, Ordered {
         return false;
     }
 
-    private Mono<Void> errorMono(ServerWebExchange exchange, BaseRsp<Void> result) {
+    private Mono<Void> errorMono(ServerWebExchange exchange, BaseRsp<String> result) {
         exchange.getResponse().setStatusCode(HttpStatus.OK);
         var bytes = Optional.ofNullable(JacksonUtils.toJsonString(result)).map(String::getBytes).orElse(new byte[] {});
         var buffer = exchange.getResponse().bufferFactory().wrap(bytes);

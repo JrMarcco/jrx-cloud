@@ -10,6 +10,9 @@ public class ApplicationContextUtils {
 
     private static ApplicationContext context;
 
+    private ApplicationContextUtils() {
+    }
+
     public static void setContext(ApplicationContext applicationContext) {
         if (context == null && applicationContext != null) {
             context = applicationContext;

@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,6 +39,9 @@ public class JacksonUtils {
         OBJECT_MAPPER.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
         OBJECT_MAPPER.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
         OBJECT_MAPPER.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
+    }
+
+    private JacksonUtils() {
     }
 
     public static ObjectMapper instance() {
@@ -92,7 +96,7 @@ public class JacksonUtils {
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
-        return null;
+        return Collections.emptyList();
     }
 
     public static <T> T convertValue(String fromValue, Class<T> toValueType) {

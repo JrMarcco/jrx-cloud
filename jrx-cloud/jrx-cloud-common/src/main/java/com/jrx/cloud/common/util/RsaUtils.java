@@ -1,5 +1,6 @@
 package com.jrx.cloud.common.util;
 
+import com.jrx.cloud.assembly.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 
@@ -8,6 +9,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -58,6 +60,9 @@ public class RsaUtils {
         loadKeyPair();
     }
 
+    private RsaUtils() {
+    }
+
     /**
      * 加载公钥 / 秘钥对
      */
@@ -103,13 +108,18 @@ public class RsaUtils {
         return Base64.getEncoder().encodeToString(getPrivateKey().getEncoded());
     }
 
-    private static Cipher getCipher(KeyFactory keyFactory, Key key) throws Exception {
-        var cipher = Cipher.getInstance(keyFactory.getAlgorithm());
-        cipher.init(Cipher.ENCRYPT_MODE, key);
-        return cipher;
+    private static Cipher getCipher(KeyFactory keyFactory, Key key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
+        try {
+            var cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            return cipher;
+        } catch (NoSuchPaddingException | NoSuchAlgorithmException | InvalidKeyException e) {
+            log.error("### [Cipher] Fail to get cipher: {} ###", e.getMessage(), e);
+            throw e;
+        }
     }
 
-    private static String doEncrypt(String content, Cipher cipher) throws Exception {
+    private static String doEncrypt(String content, Cipher cipher) throws IllegalBlockSizeException, BadPaddingException, IOException {
         var data = content.getBytes(StandardCharsets.UTF_8);
 
         try (var out = new ByteArrayOutputStream()) {
@@ -117,18 +127,24 @@ public class RsaUtils {
                 var doFinal = cipher.doFinal(Arrays.copyOfRange(data, i, i + MAX_ENCRYPT_BLOCK));
                 out.write(doFinal, 0, doFinal.length);
             }
-            return Base64.getEncoder().encodeToString(out.toByteArray()).replaceAll(BLANK, "");
+            return Base64.getEncoder().encodeToString(out.toByteArray()).replace(BLANK, "");
+        } catch (IOException | IllegalBlockSizeException | BadPaddingException e) {
+            log.error("### [Encrypt] Fail to do encrypt: {} ###", e.getMessage(), e);
+            throw e;
         }
     }
 
-    private static String doDecrypt(String encryptedData, Cipher cipher) throws Exception {
+    private static String doDecrypt(String encryptedData, Cipher cipher) throws IllegalBlockSizeException, BadPaddingException, IOException {
         var data = Base64.getDecoder().decode(encryptedData);
         try (var out = new ByteArrayOutputStream()) {
             for (var i = 0; i < data.length; i += MAX_DECRYPT_BLOCK) {
                 var doFinal = cipher.doFinal(Arrays.copyOfRange(data, i, i + MAX_DECRYPT_BLOCK));
                 out.write(doFinal, 0, doFinal.length);
             }
-            return out.toString().replaceAll(BLANK, "");
+            return out.toString().replace(BLANK, "");
+        } catch (IOException | IllegalBlockSizeException | BadPaddingException e) {
+            log.error("### [Decrypt] Fail to do decrypt: {} ###", e.getMessage(), e);
+            throw e;
         }
     }
 
@@ -187,7 +203,7 @@ public class RsaUtils {
     /**
      * 公钥验签
      */
-    public static boolean verifyByPublicKey(String encryptedSign, String sign) throws Exception {
+    public static boolean verifyByPublicKey(String encryptedSign, String sign) throws BusinessException {
         try {
             var signature = Signature.getInstance(KEY_ALGORITHM);
             signature.initVerify(getPublicKey());
@@ -196,13 +212,13 @@ public class RsaUtils {
             return signature.verify(Base64.getDecoder().decode(sign));
         } catch (NoSuchAlgorithmException e) {
             log.error("### [Verify] No such algorithm called {} : {} ###", KEY_ALGORITHM, e.getMessage(), e);
-            throw new Exception(String.format("No such algorithm called %s", KEY_ALGORITHM));
+            throw new BusinessException(String.format("No such algorithm called %s", KEY_ALGORITHM));
         } catch (InvalidKeyException e) {
             log.error("### [Verify] Invalidate public key ###");
-            throw new Exception("Invalidate public key.");
+            throw new BusinessException("Invalidate public key.");
         } catch (SignatureException e) {
             log.error("### [Verify] Fail to verify sign ###");
-            throw new Exception("Fail to verify sign.");
+            throw new BusinessException("Fail to verify sign.");
         }
     }
 }

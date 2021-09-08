@@ -23,6 +23,9 @@ public class ShellExecUtils {
                 new ThreadPoolExecutor.AbortPolicy());
     }
 
+    private ShellExecUtils() {
+    }
+
     /**
      * 移除文件。
      *
@@ -58,7 +61,7 @@ public class ShellExecUtils {
      * @param params 参数（可选）
      */
     public static void execShFile(String shPath, List<String> params) throws IOException, InterruptedException {
-        var command = new StringBuffer("sh ").append(shPath);
+        var command = new StringBuilder("sh ").append(shPath);
         if (CollectionUtils.isEmpty(params)) {
             params.forEach(param -> command.append(" ").append(param));
         }

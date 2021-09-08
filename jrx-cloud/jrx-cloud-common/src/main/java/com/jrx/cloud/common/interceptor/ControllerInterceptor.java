@@ -34,8 +34,8 @@ import static com.jrx.cloud.assembly.error.GlobalError.SERVICE_EXCEPTION;
 @RequiredArgsConstructor
 public class ControllerInterceptor {
 
-    private final ThreadLocal<Long> idThreadLocal = new ThreadLocal<>();
-    private final AtomicLong idCreator = new AtomicLong();
+    private static final ThreadLocal<Long> ID_THREAD_LOCAL = new ThreadLocal<>();
+    private static final AtomicLong ID_CREATOR = new AtomicLong();
 
     @Pointcut("execution(public * com.jrx.cloud..controller.*.*(..))")
     public void matchController() {
@@ -43,7 +43,7 @@ public class ControllerInterceptor {
 
     @Around("matchController()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
-        idThreadLocal.set(idCreator.incrementAndGet());
+        ID_THREAD_LOCAL.set(ID_CREATOR.incrementAndGet());
 
         var requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (requestAttributes == null) {
@@ -51,7 +51,7 @@ public class ControllerInterceptor {
         }
 
         var request = requestAttributes.getRequest();
-        log.info("### {} --- Request Url : [{}] ###", idThreadLocal.get(), request.getRequestURI());
+        log.info("### {} --- Request Url : [{}] ###", ID_THREAD_LOCAL.get(), request.getRequestURI());
 
         var signature = (MethodSignature) joinPoint.getSignature();
         var args = joinPoint.getArgs();
@@ -63,7 +63,7 @@ public class ControllerInterceptor {
         var start = System.nanoTime();
         var value = joinPoint.proceed(args);
         log.info("### {} --- [{}] 接口耗时: [{}] ms ###",
-                idThreadLocal.get(),
+                ID_THREAD_LOCAL.get(),
                 request.getRequestURI(),
                 TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start));
 
@@ -104,7 +104,7 @@ public class ControllerInterceptor {
         }
         builder.append(")");
 
-        log.info("### {} --- {} ###", idThreadLocal.get(), builder);
+        log.info("### {} --- {} ###", ID_THREAD_LOCAL.get(), builder);
     }
 
 

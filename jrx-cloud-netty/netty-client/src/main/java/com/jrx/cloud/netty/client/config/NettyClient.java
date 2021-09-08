@@ -37,7 +37,7 @@ public class NettyClient {
     /**
      * Netty Client Channel
      */
-    private volatile Channel channel;
+    private Channel channel;
 
     /**
      * 线程组，用于客户端对服务端的连接、数据读写

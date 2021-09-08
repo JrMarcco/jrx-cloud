@@ -3,14 +3,17 @@ package com.jrx.cloud.assembly.exception;
 import com.jrx.cloud.assembly.error.GlobalError;
 import com.jrx.cloud.assembly.error.IBusinessError;
 
+import java.io.Serial;
+
 /**
  * @author hongjc
  * @version 1.0  2020/3/2
  */
 public class BusinessException extends Exception {
+    @Serial
     private static final long serialVersionUID = 1L;
 
-    private IBusinessError err;
+    private final IBusinessError err;
 
     public BusinessException(IBusinessError err) {
         this.err = err;
@@ -18,6 +21,7 @@ public class BusinessException extends Exception {
 
     public BusinessException(String msg) {
         super(msg);
+        this.err = GlobalError.SERVICE_EXCEPTION;
     }
 
     public String getExceptionCode() {

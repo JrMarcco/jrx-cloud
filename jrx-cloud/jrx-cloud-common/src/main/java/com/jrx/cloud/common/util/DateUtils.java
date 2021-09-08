@@ -13,6 +13,9 @@ public class DateUtils {
 
     private static final ZoneId DEFAULT_ZONE_ID = ZoneId.systemDefault();
 
+    private DateUtils() {
+    }
+
     public static Date localDateTime2Date(LocalDateTime localDateTime, ZoneId zoneId) {
         return Date.from(localDateTime.atZone(zoneId).toInstant());
     }

@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +17,8 @@ import java.util.List;
 @ApiModel(description = "分页数据对象")
 @Data
 @NoArgsConstructor
-public class PageData<T> implements Serializable {
+public class PageData<T extends Serializable> implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "页面数据")
@@ -29,11 +31,11 @@ public class PageData<T> implements Serializable {
         this.total = total;
     }
 
-    public static <T> PageData<T> empty() {
+    public static <T extends Serializable> PageData<T> empty() {
         return new PageData<>(Collections.emptyList(), 0);
     }
 
-    public static <T> PageData<T> of(List<T> list, Integer total) {
+    public static <T extends Serializable> PageData<T> of(List<T> list, Integer total) {
         return new PageData<>(list, total);
     }
 }

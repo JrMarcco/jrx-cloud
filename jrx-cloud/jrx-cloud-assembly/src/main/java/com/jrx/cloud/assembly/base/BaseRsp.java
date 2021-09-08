@@ -1,6 +1,6 @@
 package com.jrx.cloud.assembly.base;
 
-import com.jrx.cloud.assembly.constant.BaseConstants;
+import com.jrx.cloud.assembly.enums.BaseResultEnum;
 import com.jrx.cloud.assembly.error.IBusinessError;
 import com.jrx.cloud.assembly.exception.BusinessException;
 import io.swagger.annotations.ApiModel;
@@ -17,7 +17,7 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel(description = "基础响应信息")
-public class BaseRsp<T> implements Serializable {
+public class BaseRsp<T extends Serializable> implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -32,9 +32,20 @@ public class BaseRsp<T> implements Serializable {
     public BaseRsp() {
     }
 
+    private BaseRsp(BaseResultEnum resultEnum) {
+        this.code = resultEnum.getCode();
+        this.msg = resultEnum.getMsg();
+    }
+
     private BaseRsp(String code, String msg) {
         this.code = code;
         this.msg = msg;
+    }
+
+    private BaseRsp(BaseResultEnum resultEnum, T data) {
+        this.code = resultEnum.getCode();
+        this.msg = resultEnum.getMsg();
+        this.data = data;
     }
 
     private BaseRsp(String code, String msg, T data) {
@@ -43,31 +54,27 @@ public class BaseRsp<T> implements Serializable {
         this.data = data;
     }
 
-    public static BaseRsp<Void> success() {
-        return new BaseRsp<>(BaseConstants.RESULT_CODE_SUCCESS, BaseConstants.RESULT_MSG_SUCCESS);
+    public static BaseRsp<String> success() {
+        return new BaseRsp<>(BaseResultEnum.SUCCESS);
     }
 
-    public static <T> BaseRsp<T> success(T data) {
-        return new BaseRsp<>(
-                BaseConstants.RESULT_CODE_SUCCESS,
-                BaseConstants.RESULT_MSG_SUCCESS,
-                data
-        );
+    public static <T extends Serializable> BaseRsp<T> success(T data) {
+        return new BaseRsp<>(BaseResultEnum.SUCCESS, data);
     }
 
-    public static <T> BaseRsp<T> error(String code, String msg) {
+    public static <T extends Serializable> BaseRsp<T> error(String code, String msg) {
         return new BaseRsp<>(code, msg);
     }
 
-    public static <T> BaseRsp<T> error(IBusinessError err) {
+    public static <T extends Serializable> BaseRsp<T> error(IBusinessError err) {
         return new BaseRsp<>(err.getErrorCode(), err.getErrorMessage());
     }
 
-    public static <T> BaseRsp<T> error(BusinessException exception) {
+    public static <T extends Serializable> BaseRsp<T> error(BusinessException exception) {
         return new BaseRsp<>(exception.getExceptionCode(), exception.getExceptionMessage());
     }
 
     protected Boolean isSuccess() {
-        return StringUtils.hasLength(code) && BaseConstants.RESULT_CODE_SUCCESS.equals(code);
+        return StringUtils.hasLength(code) && BaseResultEnum.SUCCESS.getCode().equals(code);
     }
 }

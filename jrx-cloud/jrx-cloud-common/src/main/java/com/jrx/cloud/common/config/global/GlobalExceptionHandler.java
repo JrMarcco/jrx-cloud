@@ -23,13 +23,13 @@ import static com.jrx.cloud.assembly.error.GlobalError.*;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = BusinessException.class)
-    public BaseRsp<Void> handleServiceException(BusinessException e) {
+    public BaseRsp<String> handleServiceException(BusinessException e) {
         log.error("### [{}] {} ###", e.getExceptionCode(), e.getExceptionMessage());
         return BaseRsp.error(e.getExceptionCode(), e.getExceptionMessage());
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public BaseRsp<Void> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public BaseRsp<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error("### {} ###", e.getMessage(), e);
 
         var result = e.getBindingResult();
@@ -49,13 +49,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = IllegalArgumentException.class)
-    public BaseRsp<Void> handleIllegalArgumentException(IllegalArgumentException e) {
+    public BaseRsp<String> handleIllegalArgumentException(IllegalArgumentException e) {
         log.error("### {} ###", e.getMessage(), e);
         return BaseRsp.error(SERVICE_EXCEPTION.getErrorCode(), e.getMessage());
     }
 
     @ExceptionHandler(value = Exception.class)
-    public BaseRsp<Void> handleException(Exception e) {
+    public BaseRsp<String> handleException(Exception e) {
         log.error("### {} ###", e.getMessage(), e);
         return BaseRsp.error(SERVICE_EXCEPTION);
     }

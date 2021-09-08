@@ -1,6 +1,6 @@
 package com.jrx.cloud.netty.common.messgae.auth;
 
-import com.jrx.cloud.assembly.constant.BaseConstants;
+import com.jrx.cloud.assembly.enums.BaseResultEnum;
 import com.jrx.cloud.common.util.JacksonUtils;
 import com.jrx.cloud.netty.common.messgae.Message;
 import lombok.AllArgsConstructor;
@@ -22,8 +22,8 @@ public class AuthRsp implements Message {
     private String msg;
 
     public AuthRsp() {
-        this.code = BaseConstants.RESULT_CODE_SUCCESS;
-        this.msg = BaseConstants.RESULT_MSG_SUCCESS;
+        this.code = BaseResultEnum.RESULT_CODE_SUCCESS;
+        this.msg = BaseResultEnum.RESULT_MSG_SUCCESS;
     }
 
     @Override

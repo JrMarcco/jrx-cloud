@@ -17,13 +17,13 @@ import reactor.core.publisher.Mono;
 public class CorsConfiguration {
 
     @Value("${cors.allowed_headers:x-requested-with, authorization,  Authorization, Content-Type, credential, X-XSRF-TOKEN}")
-    private String allowed_headers;
+    private String allowedHeaders;
     @Value("${cors.allowed_methods:GET, POST, OPTIONS}")
-    private String allowed_methods;
+    private String allowedMethods;
     @Value("${cors.allowed_origin:*}")
-    private String allowed_origin;
+    private String allowedOrigin;
     @Value("${cors.max_age:3600}")
-    private String max_age;
+    private String maxAge;
 
 
     @Bean
@@ -33,10 +33,10 @@ public class CorsConfiguration {
             if (CorsUtils.isCorsRequest(request)) {
                 var response = exchange.getResponse();
                 var headers = response.getHeaders();
-                headers.add("Access-Control-Allow-Origin", allowed_origin);
-                headers.add("Access-Control-Allow-Methods", allowed_methods);
-                headers.add("Access-Control-Allow-Headers", allowed_headers);
-                headers.add("Access-Control-Max-Age", max_age);
+                headers.add("Access-Control-Allow-Origin", allowedOrigin);
+                headers.add("Access-Control-Allow-Methods", allowedMethods);
+                headers.add("Access-Control-Allow-Headers", allowedHeaders);
+                headers.add("Access-Control-Max-Age", maxAge);
                 headers.add("Vary", "Origin");
                 if (request.getMethod() == HttpMethod.OPTIONS) {
                     response.setStatusCode(HttpStatus.OK);
