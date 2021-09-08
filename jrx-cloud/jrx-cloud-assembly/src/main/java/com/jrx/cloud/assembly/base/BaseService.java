@@ -1,7 +1,7 @@
 package com.jrx.cloud.assembly.base;
 
-import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.page.PageMethod;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * @author jrmarcco
  * @version 1.0  2020/11/3
  */
-public interface BaseService<Param, Result> {
+public interface BaseService<T, R> {
 
     /**
      * 分页查询
@@ -17,8 +17,8 @@ public interface BaseService<Param, Result> {
      * @param param 请求参数DTO
      * @return 分页集合
      */
-    default PageInfo<Result> page(BasePageParam<Param> param) {
-        return PageHelper.startPage(param).doSelectPageInfo(() -> list(param.getParam()));
+    default PageInfo<R> page(BasePageParam<T> param) {
+        return PageMethod.startPage(param).doSelectPageInfo(() -> list(param.getParam()));
     }
 
     /**
@@ -28,5 +28,5 @@ public interface BaseService<Param, Result> {
      * @return 查询响应
      */
     @SuppressWarnings("UnusedReturnValue")
-    List<Result> list(Param param);
+    List<R> list(T param);
 }
