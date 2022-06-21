@@ -22,7 +22,7 @@
         <version.spring.boot>2.5.1</version.spring.boot>
         <version.spring.cloud>2020.0.3</version.spring.cloud>
 
-        <version.mysql.connector>8.0.24</version.mysql.connector>
+        <version.mysql.connector>8.0.28</version.mysql.connector>
         <version.mybatis.starer>2.1.4</version.mybatis.starer>
         <version.mybatis.pagehelper>5.2.0</version.mybatis.pagehelper>
         <version.druid>1.2.6</version.druid>
